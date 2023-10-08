@@ -5,12 +5,14 @@ import Home from "../src/pages/Home"
 
 function App() {
   return (
-   <div className="w-11/12  mx-20" >
+   <div className="w-full bg-slate-50">
+    <div className="w-11/12  mx-20" >
      <Navbar/>
     
     <Routes>
       <Route path="/" element={<Home/>}/>
     </Routes>
+   </div>
    </div>
   );
 }

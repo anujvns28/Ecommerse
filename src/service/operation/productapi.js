@@ -58,3 +58,5 @@ export const getAllSubCategories = async(categoryId) =>{
   return result
 }
 
+//get categoryWise Subcategories
+

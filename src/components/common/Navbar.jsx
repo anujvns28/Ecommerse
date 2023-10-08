@@ -4,6 +4,7 @@ import {AiOutlineShoppingCart} from "react-icons/ai"
 import { Link } from 'react-router-dom'
 import { AiOutlineDown } from "react-icons/ai"
 import { getAllCategories, getAllSubCategories } from '../../service/operation/productapi'
+import {HiArrowLongRight} from "react-icons/hi2"
 
 const Navbar = () => {
 const [category,setCategory] = useState(null);
@@ -79,8 +80,12 @@ const [subCategoires,setSubCategories] = useState(null)
                 category.categoies.map((item,index) =>{
                   return <div key={index} onMouseOver={ () => subCategories(item._id)}
                   className='hover:bg-slate-200 anuj py-4 px-4 rounded-md relative'>
-                    {item.categoryName}
-                    <div className=" subCategories absolute p-4 rounded-md bg-slate-200 ">
+                 <div className='flex justify-between'>
+                     {item.categoryName}
+                   <p className='text-2xl'>  <HiArrowLongRight/></p>
+                 </div>
+                    <div 
+                    className=" subCategories absolute p-4 rounded-md bg-slate-200 ">
                       {
                         subCategoires ? subCategoires.subCategorys.map((item,index) =>{
                           return <div className='hover:bg-slate-300  py-4 px-4 rounded-md relative'>

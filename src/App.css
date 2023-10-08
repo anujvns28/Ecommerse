@@ -2,7 +2,7 @@
 
 .subCategories {
  
- width: 100%;
+ width: 80%;
 
  display: none;
  top: 20%;
@@ -13,4 +13,8 @@
 
 .anuj:hover > .subCategories{
 display: block;
+}
+
+.shadow{
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
