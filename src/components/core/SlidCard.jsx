@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 const SlidCard = ({cardDetail}) => {
   return (
     <div className='drop-shadow-md  rounded-xl bg-white '>
-        <Link to={`/`}> 
+        <Link to={`/${cardDetail._id}`}> 
     <div className=' flex justify-center items-center border-b rounded-lg hover:scale-105 transition-all duration-500'>  
     <img className='w-full rounded-xl object-cover h-[350px]' 
     src={cardDetail.image} />
