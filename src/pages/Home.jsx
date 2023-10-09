@@ -17,20 +17,22 @@ const Home = () => {
   const [allCategories,setallCategories] = useState([]);
   const all_categories = [] 
 
-  useEffect(async () => {
-    const result = await getAllCategories();
+  useEffect(() => {
+    const getCategoires = async() =>{
+      const result = await getAllCategories();
     if (result) {
       setCategory(result)
     }
+    }
+    
+    getCategoires()
   }, [])
 
-// if(category){
-//   category.categoies.map((item) =>{
-//      item.subCategorys.filter((ele) =>{
-//     const res = 
-//      })
-//   })
-// }
+  
+  
+  
+
+  
   
 
   return (

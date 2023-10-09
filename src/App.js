@@ -3,6 +3,7 @@ import "./App.css";
 import Navbar from "./components/common/Navbar";
 import Home from "../src/pages/Home"
 import Footer from "./components/common/Footer";
+import SubCategorieWisePage from "./pages/SubCategorieWisePage";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
     
     <Routes>
       <Route path="/" element={<Home/>}/>
+      <Route path={`/:id`} element={<SubCategorieWisePage/>}/>
     </Routes>
    </div>
    <Footer/>

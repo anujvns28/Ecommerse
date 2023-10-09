@@ -34,11 +34,15 @@ const [subCategoires,setSubCategories] = useState(null)
 
    const token = false
 
-   useEffect( async() =>{
-   const result = await getAllCategories();
+   const getCategories = async() =>{
+    const result = await getAllCategories();
    if(result){
     setCategory(result)
    }
+   }
+
+   useEffect( () =>{
+   getCategories()
    },[])
 
    const subCategories = async(categoryID) =>{
