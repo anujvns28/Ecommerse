@@ -57,8 +57,8 @@ const [subCategoires,setSubCategories] = useState(null)
    
   return (
     
-      <div className='flex items-center justify-between  h-20 w-full  px-20 '>
-      <div className='flex items-center justify-between w-[40%]'>
+      <div className='flex items-center justify-between  h-20 w-full   '>
+      <div className='flex items-center justify-between w-[35%]'>
      <Link to={"/"}> 
      <img width={60} src={logo}/>
      </Link >
@@ -117,7 +117,7 @@ const [subCategoires,setSubCategories] = useState(null)
         })
       }
       </div>
-      <div className='flex justify-between w-[12%] items-center'>
+      <div className='flex justify-between w-[10%] items-center'>
       {
         token &&  <p className='text-2xl'>
           <Link to={"/cart"}> <AiOutlineShoppingCart/> 

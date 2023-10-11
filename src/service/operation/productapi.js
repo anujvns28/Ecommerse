@@ -5,7 +5,8 @@ import { apiConnector } from "../apiconnectur";
 const {
 GET_ALL_PRODUCT_API,
 GET_ALL_CATEGORY_API,
-GET_CATEGORY_SUBCATEGORY
+GET_CATEGORY_SUBCATEGORY,
+GET_SUBCATEGORI_WISE_PRODUCT
 } = productEndPoints
 
 export  const getAllProducts = async () => {
@@ -60,3 +61,19 @@ export const getAllSubCategories = async(categoryId) =>{
 
 //get categoryWise Subcategories
 
+export  const getAllSubCategoryProduct = async (subCategoryId) => {
+   
+  let resutl 
+  try{
+    
+    const response = await apiConnector("POST",GET_SUBCATEGORI_WISE_PRODUCT,{subCategoryId:subCategoryId});
+
+    console.log("SubCategori All Prduct response ",response)
+    resutl = response.data
+  }
+  catch(error) {
+    console.log("SubCategori All Prduct fetching  API ERROR....", error);
+  }
+  return resutl
+  
+}
