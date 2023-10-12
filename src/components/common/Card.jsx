@@ -11,9 +11,10 @@ const Card = ({cardData}) => {
     src={cardData.productMainImage} />
     </div>
 
-    <div className="flex flex-col gap-2 px-1 py-3 font-semibold text-orange-500">
-      <p className="text-xl text-richblack-5">{cardData.productName}</p>
-      <p className='text-lg text-black'>MRP : ₹ {cardData.price}</p>
+    <div className="flex flex-col  px-1 py-3  text-orange-500">
+      <p className="text-xl font-semibold">{cardData.productName}</p>
+      <p className="text-lg text-slate-400">{cardData.forWhom}' Shouse</p>
+      <p className='text-lg text-black font-semibold'>MRP : ₹ {cardData.price}</p>
     </div>
       </Link> 
     </div>
