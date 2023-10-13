@@ -6,30 +6,37 @@ import { getAllSubCategoryProduct } from '../service/operation/productapi'
 import { useLocation } from 'react-router-dom'
 import SlidCard from '../components/core/SlidCard'
 import Card from '../components/common/Card'
+import { useDispatch, useSelector } from 'react-redux'
+
 
 const SubCategorieWisePage = () => {
+const dispatch = useDispatch()
 const location = useLocation();
 const subCategoryId = location.pathname.split("/").at(-1)
 const [products,setProducts] = useState()
+
+const {product} = useSelector((state) =>state.product)
+
  
 const fetchProducts = async() =>{
 const result = await getAllSubCategoryProduct(subCategoryId);
 if(result){
   setProducts(result.subCategoryProducts)
   console.log(result,"this is result")
+  
 }
 }
  useEffect(() =>{
  fetchProducts()
   },[])
 
-  
-console.log(products,"this is products")
+  console.log("this is aj",product)
+
   return (
     <div  className='flex flex-col gap-3 px-2 mx-auto'>
       <div className='w-full flex items-center justify-between text-black py-2 sticky top-0 z-50  mt-8 bg-white '>
         {
-          products ? 
+          products  ? 
           <div >
           <p className='text-xs'>Sports Shouse / {products.name}</p>
           <h1 className='text-xl font-semibold'>{products.name} ({products.product.length})</h1>
@@ -59,7 +66,8 @@ console.log(products,"this is products")
             products.product.length !== 0 
             ? <div className='flex flex-wrap  flex-row gap-2 '>
               {
-            products.product.map((item,index) =>{
+            product  
+            ? product.map((item,index) =>{
               return <div className='w-[32.5%] rounded-md'
                key={index}>
                {
@@ -67,6 +75,15 @@ console.log(products,"this is products")
                }
               </div>
             })
+            : products.product.map((item,index) =>{
+              return <div className='w-[32.5%] rounded-md'
+               key={index}>
+               {
+               <Card cardData={item}/>
+               }
+              </div>
+            })
+            
           }
             </div>  : <div className='flex items-center justify-center h-screen'>Not Found</div>
           }

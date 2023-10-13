@@ -1,10 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { getAllSubCategoryProduct } from '../../service/operation/productapi'
+import { useLocation } from 'react-router-dom'
+import { setFilterProduct } from '../../slice/produc'
 
 const Sidebar = () => {
   const gender = [
     {
       id: 1,
-      gender: "Male"
+      gender: "Men"
     },
     {
       id: 2,
@@ -111,17 +115,68 @@ const Sidebar = () => {
     },
   ]
 
-  const [checkedValue,setChecedValues] = useState([]);
+  const dispatch = useDispatch();
+  const location = useLocation()
+  const [filterdProduct,setFilterdProduct] = useState()
+  const subCategoryId = location.pathname.split("/").at(-1)
+  const [products,setProducts] = useState()
 
-  const handleChange = (event) =>{
+
+  const [checkedValue,setChecedValues] = useState([]);
+  let proArray = []
+
+
+    const handleChange = (event) =>{
     const {value,checked} = event.target
 
     if(checked){
-      setChecedValues(pre => [...pre,value])
+     setChecedValues((pre) => [...pre,value])
+    }else{
+     const ind = checkedValue.findIndex((index) => index === value)
+     console.log(ind)
+      checkedValue.splice(ind,1)
+      filterFunction()
     }
-    
   }
 
+  const fetchProducts = async() =>{
+    const result = await getAllSubCategoryProduct(subCategoryId);
+    if(result){
+      setProducts(result.subCategoryProducts)
+    }
+    }
+     useEffect(() =>{
+     fetchProducts()
+      },[])
+  
+
+  useEffect(() =>{
+    proArray = []
+    filterFunction();
+  },[checkedValue])
+  
+  useEffect(() =>{
+   dispatch(setFilterProduct(filterdProduct));
+  },[filterdProduct])
+
+  const filterFunction = () =>{
+    if(checkedValue.length > 0 && products.product.length !== 0 ){
+      checkedValue.map((item,index) =>{
+      products.product.map((pro,index) =>{
+        if(item === pro.forWhom){
+          proArray.push(pro)
+          if(proArray.length === index){
+            setFilterdProduct(proArray)
+          }
+        }
+      })
+      })
+    }
+  }
+
+  
+
+  console.log("this is printing filterd product",filterdProduct)
   console.log(checkedValue)
   return (
 
