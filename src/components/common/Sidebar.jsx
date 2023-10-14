@@ -117,66 +117,73 @@ const Sidebar = () => {
 
   const dispatch = useDispatch();
   const location = useLocation()
-  const [filterdProduct,setFilterdProduct] = useState()
+  const [filterdProduct, setFilterdProduct] = useState()
   const subCategoryId = location.pathname.split("/").at(-1)
-  const [products,setProducts] = useState()
+  const [products, setProducts] = useState()
+  const {product} = useSelector((state) => state.product)
 
 
-  const [checkedValue,setChecedValues] = useState([]);
+  const [checkedValue, setChecedValues] = useState([]);
   let proArray = []
 
 
-    const handleChange = (event) =>{
-    const {value,checked} = event.target
+  const handleChange = (event) => {
+    const { value, checked } = event.target
 
-    if(checked){
-     setChecedValues((pre) => [...pre,value])
-    }else{
-     const ind = checkedValue.findIndex((index) => index === value)
-     console.log(ind)
-      checkedValue.splice(ind,1)
+    if (checked) {
+      setChecedValues((pre) => [...pre, value])
+    } else {
+      const ind = checkedValue.findIndex((index) => index === value)
+      checkedValue.splice(ind, 1)
       filterFunction()
+      if (checkedValue.length === 0) {
+        dispatch(setFilterProduct(null));
+      }
     }
   }
 
-  const fetchProducts = async() =>{
+  const fetchProducts = async () => {
     const result = await getAllSubCategoryProduct(subCategoryId);
-    if(result){
+    if (result) {
       setProducts(result.subCategoryProducts)
     }
-    }
-     useEffect(() =>{
-     fetchProducts()
-      },[])
-  
+  }
+  useEffect(() => {
+    fetchProducts()
+  }, [])
 
-  useEffect(() =>{
+
+  useEffect(() => {
     proArray = []
     filterFunction();
-  },[checkedValue])
-  
-  useEffect(() =>{
-   dispatch(setFilterProduct(filterdProduct));
-  },[filterdProduct])
+  }, [checkedValue])
 
-  const filterFunction = () =>{
-    if(checkedValue.length > 0 && products.product.length !== 0 ){
-      checkedValue.map((item,index) =>{
-      products.product.map((pro,index) =>{
-        if(item === pro.forWhom){
-          proArray.push(pro)
-          if(proArray.length === index){
+  useEffect(() => {
+    dispatch(setFilterProduct(filterdProduct));
+  }, [filterdProduct])
+
+  const filterFunction = () => {
+    if (checkedValue.length > 0 && products.product.length !== 0) {
+      checkedValue.map((item) => {
+        products.product.map((pro, index) => {
+          if (item === pro.forWhom || item === pro.price) {
+            proArray.push(pro)
             setFilterdProduct(proArray)
           }
-        }
-      })
+        })
       })
     }
   }
 
-  
 
-  console.log("this is printing filterd product",filterdProduct)
+
+
+
+
+
+
+
+  console.log("this is printing filterd product",product)
   console.log(checkedValue)
   return (
 
@@ -188,7 +195,7 @@ const Sidebar = () => {
             return <div className='flex '
               key={index}>
               <label className='flex flex-row gap-2'>
-                 <input
+                <input
                   className='outline-none border border-black w-5 h-5'
                   type='checkbox'
                   value={item.gender}
@@ -211,6 +218,8 @@ const Sidebar = () => {
                 <input
                   className='outline-none border border-black w-5 h-5'
                   type='checkbox'
+                  value={item.price}
+                   onChange={handleChange}
                 />
                 <p>{item.price}</p>
               </label>
@@ -240,16 +249,16 @@ const Sidebar = () => {
           {
             proRating.map((item, index) => {
               return <div className='flex '
-              key={index}>
-              <label className='flex flex-row gap-2'>
-                <input
-                  className='outline-none border border-black w-5 h-5'
-                  type='checkbox'
-                />
-                <p>{item.rating}</p>
-              </label>
-            </div>
-          })
+                key={index}>
+                <label className='flex flex-row gap-2'>
+                  <input
+                    className='outline-none border border-black w-5 h-5'
+                    type='checkbox'
+                  />
+                  <p>{item.rating}</p>
+                </label>
+              </div>
+            })
           }
         </div>
       </div>

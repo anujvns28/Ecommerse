@@ -30,7 +30,7 @@ if(result){
  fetchProducts()
   },[])
 
-  console.log("this is aj",product)
+  console.log("this is product form slice",product)
 
   return (
     <div  className='flex flex-col gap-3 px-2 mx-auto'>
@@ -39,7 +39,7 @@ if(result){
           products  ? 
           <div >
           <p className='text-xs'>Sports Shouse / {products.name}</p>
-          <h1 className='text-xl font-semibold'>{products.name} ({products.product.length})</h1>
+          <h1 className='text-xl font-semibold'>{products.name} ({product ? product.length : products.product.length})</h1>
         </div>
         : <div className='flex items-center justify-center h-screen'>Loading...</div>
         }
