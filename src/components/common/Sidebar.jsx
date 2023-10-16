@@ -47,7 +47,7 @@ const Sidebar = () => {
     },
     {
       id: 1,
-      price: "15000-30000"
+      price: "30000-Over"
     },
   ]
 
@@ -124,8 +124,9 @@ const Sidebar = () => {
 
 
   const [checkedValue, setChecedValues] = useState([]);
+  const [cehckedValuePrice,setCheckValuePrice] = useState([]);
   let proArray = []
-
+  let proArryaPriceandGender = []
 
   const handleChange = (event) => {
     const { value, checked } = event.target
@@ -137,6 +138,22 @@ const Sidebar = () => {
       checkedValue.splice(ind, 1)
       filterFunction()
       if (checkedValue.length === 0) {
+        dispatch(setFilterProduct(null));
+      }
+    }
+  }
+
+  //price---
+  const handleChangePrice = (event) => {
+    const { value, checked } = event.target
+
+    if (checked) {
+      setCheckValuePrice((pre) => [...pre, value])
+    } else {
+      const ind = cehckedValuePrice.findIndex((index) => index === value)
+      cehckedValuePrice.splice(ind, 1)
+      filterFunctionPrice()
+      if (cehckedValuePrice.length === 0) {
         dispatch(setFilterProduct(null));
       }
     }
@@ -155,18 +172,36 @@ const Sidebar = () => {
 
   useEffect(() => {
     proArray = []
+   if(checkedValue.length > 0 && cehckedValuePrice.length === 0){
     filterFunction();
-  }, [checkedValue])
+   }
+  }, [checkedValue,])
+  
+//calling filterPriceFunction
+  useEffect(() => {
+    proArray = []
+    if(checkedValue.length === 0 && cehckedValuePrice.length > 0){
+      filterFunctionPrice();
+     }
+  }, [cehckedValuePrice])
+
+  useEffect(() =>{
+    proArray = []
+    if(checkedValue.length > 0 && cehckedValuePrice.length > 0){
+      filteringPriceAndGender();
+     }
+  },[cehckedValuePrice,checkedValue])
 
   useEffect(() => {
     dispatch(setFilterProduct(filterdProduct));
   }, [filterdProduct])
 
+
   const filterFunction = () => {
-    if (checkedValue.length > 0 && products.product.length !== 0) {
+    if (checkedValue.length >  0 && products.product.length !== 0) {
       checkedValue.map((item) => {
-        products.product.map((pro, index) => {
-          if (item === pro.forWhom || item === pro.price) {
+        products.product.map((pro) => {
+          if (item === pro.forWhom ) {
             proArray.push(pro)
             setFilterdProduct(proArray)
           }
@@ -175,16 +210,78 @@ const Sidebar = () => {
     }
   }
 
+  let lowerPrice 
+  let upperPrice
 
+  //price filtering function
+  const filterFunctionPrice = () => {
+    if (cehckedValuePrice.length >  0 && products.product.length !== 0) {   
+      cehckedValuePrice.map((item) => {
+      if(item.includes("-")){
+      const priceArr =  item.split("-");
+      if(priceArr[0].includes("Under")){
+        lowerPrice = 0 
+      }else{
+        lowerPrice = Number(priceArr[0]);
+      }
+      if(priceArr[1].includes("Over")){
+        upperPrice = 100000
+      }else{
+        upperPrice = Number(priceArr[1]);
+      }
+      }
 
+      console.log("calling...........",lowerPrice,upperPrice)
+      
+        products.product.map((pro) => {
+          if ( pro.price >= lowerPrice && pro.price <= upperPrice   ) {
+            proArray.push(pro)
+            setFilterdProduct(proArray)
+          }
+        })
+      })
+    }
+  }
 
+  const  filteringPriceAndGender = () =>{
+    if (cehckedValuePrice.length >  0 && checkedValue.length >  0 && products.product.length !== 0) {   
+      let filteringKey = []
+       checkedValue.map((item) => filteringKey.push(item));
+       cehckedValuePrice.map((item) => filteringKey.push(item));
+      
+       filteringKey.map((item) => {
+        if(item.includes("-")){
+        const priceArr =  item.split("-");
+        if(priceArr[0].includes("Under")){
+          lowerPrice = 0 
+        }else{
+          lowerPrice = Number(priceArr[0]);
+        }
+        if(priceArr[1].includes("Over")){
+          upperPrice = 100000
+        }else{
+          upperPrice = Number(priceArr[1]);
+        }
+        }
 
+          products.product.map((pro) => {
+            console.log("hello ji kya hal chal", pro.price)
+            if ( pro.price >= lowerPrice && pro.price <= upperPrice  &&  item === pro.forWhom ) {
+              setFilterProduct(null)
+              proArryaPriceandGender.push(pro)
+              setFilterdProduct(proArryaPriceandGender)
+              console.log(filterdProduct)
+            }
+          })
+        })
+    }
+  }
 
-
+  console.log("calling ji kjlkjlkjlkjkl",filterdProduct)
 
 
   console.log("this is printing filterd product",product)
-  console.log(checkedValue)
+  console.log(checkedValue,"aur",cehckedValuePrice)
   return (
 
     <div className='w-[17%] h-screen   sticky top-6 border p-4 overflow-y-scroll bg-scroll '>
@@ -219,7 +316,7 @@ const Sidebar = () => {
                   className='outline-none border border-black w-5 h-5'
                   type='checkbox'
                   value={item.price}
-                   onChange={handleChange}
+                   onChange={handleChangePrice}
                 />
                 <p>{item.price}</p>
               </label>
