@@ -136,9 +136,15 @@ const Sidebar = () => {
     } else {
       const ind = checkedValue.findIndex((index) => index === value)
       checkedValue.splice(ind, 1)
-      filterFunction()
-      if (checkedValue.length === 0) {
+      if(checkedValue.length > 0 && cehckedValuePrice.length === 0){
+        filterFunction()
+      }else{
+        filteringPriceAndGender()
+      }
+      if (checkedValue.length === 0 && cehckedValuePrice.length === 0) {
         dispatch(setFilterProduct(null));
+      }else if(checkedValue.length === 0){
+        filterFunctionPrice()
       }
     }
   }
@@ -152,9 +158,16 @@ const Sidebar = () => {
     } else {
       const ind = cehckedValuePrice.findIndex((index) => index === value)
       cehckedValuePrice.splice(ind, 1)
-      filterFunctionPrice()
-      if (cehckedValuePrice.length === 0) {
+      if(checkedValue.length === 0 && cehckedValuePrice.length > 0){
+        filterFunctionPrice()
+      }else{
+        filteringPriceAndGender()
+      }
+
+      if (checkedValue.length === 0 && cehckedValuePrice.length === 0) {
         dispatch(setFilterProduct(null));
+      }else if(cehckedValuePrice.length === 0){
+        filterFunction()
       }
     }
   }
@@ -175,7 +188,7 @@ const Sidebar = () => {
    if(checkedValue.length > 0 && cehckedValuePrice.length === 0){
     filterFunction();
    }
-  }, [checkedValue,])
+  }, [checkedValue])
   
 //calling filterPriceFunction
   useEffect(() => {
@@ -185,6 +198,7 @@ const Sidebar = () => {
      }
   }, [cehckedValuePrice])
 
+  
   useEffect(() =>{
     proArray = []
     if(checkedValue.length > 0 && cehckedValuePrice.length > 0){
@@ -231,7 +245,7 @@ const Sidebar = () => {
       }
       }
 
-      console.log("calling...........",lowerPrice,upperPrice)
+    
       
         products.product.map((pro) => {
           if ( pro.price >= lowerPrice && pro.price <= upperPrice   ) {
@@ -245,43 +259,56 @@ const Sidebar = () => {
 
   const  filteringPriceAndGender = () =>{
     if (cehckedValuePrice.length >  0 && checkedValue.length >  0 && products.product.length !== 0) {   
-      let filteringKey = []
-       checkedValue.map((item) => filteringKey.push(item));
-       cehckedValuePrice.map((item) => filteringKey.push(item));
-      
-       filteringKey.map((item) => {
-        if(item.includes("-")){
-        const priceArr =  item.split("-");
-        if(priceArr[0].includes("Under")){
-          lowerPrice = 0 
-        }else{
-          lowerPrice = Number(priceArr[0]);
-        }
-        if(priceArr[1].includes("Over")){
-          upperPrice = 100000
-        }else{
-          upperPrice = Number(priceArr[1]);
-        }
-        }
-
-          products.product.map((pro) => {
-            console.log("hello ji kya hal chal", pro.price)
-            if ( pro.price >= lowerPrice && pro.price <= upperPrice  &&  item === pro.forWhom ) {
-              setFilterProduct(null)
-              proArryaPriceandGender.push(pro)
-              setFilterdProduct(proArryaPriceandGender)
-              console.log(filterdProduct)
-            }
-          })
+      let genderfilter = []
+      console.log("hllo anj ji ji")
+      checkedValue.map((gender) =>{
+        products.product.map((product) => {
+          if(gender === product.forWhom){
+            
+            genderfilter.push(product)
+          }
         })
+       
+      })
+
+      console.log("this is both wala ",genderfilter)
+     
+      if(genderfilter.length>0){
+        cehckedValuePrice.map((item) =>{
+          if(item.includes("-")){
+            const priceArr =  item.split("-");
+            if(priceArr[0].includes("Under")){
+              lowerPrice = 0 
+            }else{
+              lowerPrice = Number(priceArr[0]);
+            }
+            if(priceArr[1].includes("Over")){
+              upperPrice = 100000
+            }else{
+              upperPrice = Number(priceArr[1]);
+            }
+            }
+
+            genderfilter.map((pro) => {
+              if ( pro.price >= lowerPrice && pro.price <= upperPrice   ) {
+                proArray.push(pro)
+                setFilterdProduct(proArray)
+              }
+            })
+
+
+        })
+      }
+     
     }
   }
 
-  console.log("calling ji kjlkjlkjlkjkl",filterdProduct)
+
+  console.log(product,"this is pinitg all product")
+  console.log(checkedValue.length,cehckedValuePrice.length,"iho ")
 
 
-  console.log("this is printing filterd product",product)
-  console.log(checkedValue,"aur",cehckedValuePrice)
+  
   return (
 
     <div className='w-[17%] h-screen   sticky top-6 border p-4 overflow-y-scroll bg-scroll '>
