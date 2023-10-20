@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getAllSubCategoryProduct } from '../../service/operation/productapi'
 import { useLocation } from 'react-router-dom'
 import { setFilterProduct } from '../../slice/produc'
+import {AiOutlineCheck} from "react-icons/ai"
 
 const Sidebar = () => {
   const gender = [
@@ -120,14 +121,14 @@ const Sidebar = () => {
   const [filterdProduct, setFilterdProduct] = useState()
   const subCategoryId = location.pathname.split("/").at(-1)
   const [products, setProducts] = useState()
-  const {product} = useSelector((state) => state.product)
-
+  const { product } = useSelector((state) => state.product)
 
   const [checkedValue, setChecedValues] = useState([]);
-  const [cehckedValuePrice,setCheckValuePrice] = useState([]);
+  const [cehckedValuePrice, setCheckValuePrice] = useState([]);
+  const [clickedColor, setClickedColor] = useState([])
   let proArray = []
-  let proArryaPriceandGender = []
 
+  //Gender wise hedling
   const handleChange = (event) => {
     const { value, checked } = event.target
 
@@ -136,20 +137,15 @@ const Sidebar = () => {
     } else {
       const ind = checkedValue.findIndex((index) => index === value)
       checkedValue.splice(ind, 1)
-      if(checkedValue.length > 0 && cehckedValuePrice.length === 0){
-        filterFunction()
-      }else{
-        filteringPriceAndGender()
-      }
-      if (checkedValue.length === 0 && cehckedValuePrice.length === 0) {
+      filterFunction()
+
+      if (checkedValue.length === 0) {
         dispatch(setFilterProduct(null));
-      }else if(checkedValue.length === 0){
-        filterFunctionPrice()
       }
     }
   }
 
-  //price---
+  //price handling
   const handleChangePrice = (event) => {
     const { value, checked } = event.target
 
@@ -158,20 +154,31 @@ const Sidebar = () => {
     } else {
       const ind = cehckedValuePrice.findIndex((index) => index === value)
       cehckedValuePrice.splice(ind, 1)
-      if(checkedValue.length === 0 && cehckedValuePrice.length > 0){
-        filterFunctionPrice()
-      }else{
-        filteringPriceAndGender()
+      filterFunction()
+
+      if (cehckedValuePrice.length === 0) {
+        dispatch(setFilterProduct(null));
       }
 
-      if (checkedValue.length === 0 && cehckedValuePrice.length === 0) {
+    }
+  }
+
+  //handling color
+  const handleColor = (colorName) => {
+    if (!clickedColor.includes(colorName)) {
+      setClickedColor((prv) => [...prv, colorName])
+    } else {
+      const index = clickedColor.findIndex((item) => item === colorName);
+      clickedColor.splice(index, 1)
+      setClickedColor(clickedColor)
+      filterFunction()
+      if (clickedColor.length === 0) {
         dispatch(setFilterProduct(null));
-      }else if(cehckedValuePrice.length === 0){
-        filterFunction()
       }
     }
   }
 
+  // fetching product
   const fetchProducts = async () => {
     const result = await getAllSubCategoryProduct(subCategoryId);
     if (result) {
@@ -183,132 +190,97 @@ const Sidebar = () => {
   }, [])
 
 
-  useEffect(() => {
-    proArray = []
-   if(checkedValue.length > 0 && cehckedValuePrice.length === 0){
-    filterFunction();
-   }
-  }, [checkedValue])
-  
-//calling filterPriceFunction
-  useEffect(() => {
-    proArray = []
-    if(checkedValue.length === 0 && cehckedValuePrice.length > 0){
-      filterFunctionPrice();
-     }
-  }, [cehckedValuePrice])
 
-  
-  useEffect(() =>{
+
+  //calling gender or price tow lear filter function
+  useEffect(() => {
     proArray = []
-    if(checkedValue.length > 0 && cehckedValuePrice.length > 0){
-      filteringPriceAndGender();
-     }
-  },[cehckedValuePrice,checkedValue])
+    filterFunction();
+  }, [cehckedValuePrice, checkedValue, clickedColor])
+
 
   useEffect(() => {
     dispatch(setFilterProduct(filterdProduct));
   }, [filterdProduct])
 
 
-  const filterFunction = () => {
-    if (checkedValue.length >  0 && products.product.length !== 0) {
-      checkedValue.map((item) => {
-        products.product.map((pro) => {
-          if (item === pro.forWhom ) {
-            proArray.push(pro)
-            setFilterdProduct(proArray)
-          }
-        })
-      })
-    }
-  }
 
-  let lowerPrice 
+  let lowerPrice
   let upperPrice
 
-  //price filtering function
-  const filterFunctionPrice = () => {
-    if (cehckedValuePrice.length >  0 && products.product.length !== 0) {   
-      cehckedValuePrice.map((item) => {
-      if(item.includes("-")){
-      const priceArr =  item.split("-");
-      if(priceArr[0].includes("Under")){
-        lowerPrice = 0 
-      }else{
-        lowerPrice = Number(priceArr[0]);
-      }
-      if(priceArr[1].includes("Over")){
-        upperPrice = 100000
-      }else{
-        upperPrice = Number(priceArr[1]);
-      }
-      }
+  //this function is filtering product
+  const filterFunction = () => {
 
-    
-      
-        products.product.map((pro) => {
-          if ( pro.price >= lowerPrice && pro.price <= upperPrice   ) {
-            proArray.push(pro)
-            setFilterdProduct(proArray)
-          }
-        })
-      })
-    }
-  }
-
-  const  filteringPriceAndGender = () =>{
-    if (cehckedValuePrice.length >  0 && checkedValue.length >  0 && products.product.length !== 0) {   
-      let genderfilter = []
-      console.log("hllo anj ji ji")
-      checkedValue.map((gender) =>{
+    let filteredProduct = []
+    if (checkedValue.length > 0) {
+      checkedValue.map((gender) => {
         products.product.map((product) => {
-          if(gender === product.forWhom){
-            
-            genderfilter.push(product)
+          if (gender === product.forWhom) {
+            filteredProduct.push(product)
           }
         })
-       
       })
-
-      console.log("this is both wala ",genderfilter)
-     
-      if(genderfilter.length>0){
-        cehckedValuePrice.map((item) =>{
-          if(item.includes("-")){
-            const priceArr =  item.split("-");
-            if(priceArr[0].includes("Under")){
-              lowerPrice = 0 
-            }else{
-              lowerPrice = Number(priceArr[0]);
-            }
-            if(priceArr[1].includes("Over")){
-              upperPrice = 100000
-            }else{
-              upperPrice = Number(priceArr[1]);
-            }
-            }
-
-            genderfilter.map((pro) => {
-              if ( pro.price >= lowerPrice && pro.price <= upperPrice   ) {
-                proArray.push(pro)
-                setFilterdProduct(proArray)
-              }
-            })
-
-
-        })
-      }
-     
+      setFilterdProduct(filteredProduct)
     }
+
+
+
+    if (cehckedValuePrice.length > 0) {
+      cehckedValuePrice.map((item) => {
+        if (item.includes("-")) {
+          const priceArr = item.split("-");
+          if (priceArr[0].includes("Under")) {
+            lowerPrice = 0
+          } else {
+            lowerPrice = Number(priceArr[0]);
+          }
+          if (priceArr[1].includes("Over")) {
+            upperPrice = 100000
+          } else {
+            upperPrice = Number(priceArr[1]);
+          }
+        }
+
+        if (checkedValue.length > 0) {
+          filteredProduct.map((pro) => {
+            if (pro.price >= lowerPrice && pro.price <= upperPrice) {
+              proArray.push(pro)
+            }
+          })
+        } else {
+          products.product.map((pro) => {
+            if (pro.price >= lowerPrice && pro.price <= upperPrice) {
+              filteredProduct.push(pro)
+            }
+          })
+        }
+      })
+      setFilterdProduct(checkedValue.length > 0 ? proArray : filteredProduct)
+    }
+
+    if (clickedColor.length > 0) {
+      proArray = []
+      clickedColor.map((item) => {
+        if (checkedValue.length === 0 && cehckedValuePrice.length === 0) {
+          products.product.map((pro) => {
+            if (item === pro.color) {
+              filteredProduct.push(pro)
+            }
+          })
+        } else {
+          filteredProduct.map((pro) => {
+            if (item === pro.color) {
+              proArray.push(pro)
+            }
+          })
+        }
+      })
+      setFilterdProduct(proArray.length > 0 ? proArray : filteredProduct)
+    }
+
+
   }
 
-
-  console.log(product,"this is pinitg all product")
-  console.log(checkedValue.length,cehckedValuePrice.length,"iho ")
-
-
-  
   return (
 
     <div className='w-[17%] h-screen   sticky top-6 border p-4 overflow-y-scroll bg-scroll '>
@@ -343,7 +315,7 @@ const Sidebar = () => {
                   className='outline-none border border-black w-5 h-5'
                   type='checkbox'
                   value={item.price}
-                   onChange={handleChangePrice}
+                  onChange={handleChangePrice}
                 />
                 <p>{item.price}</p>
               </label>
@@ -357,10 +329,19 @@ const Sidebar = () => {
         <div className='flex flex-row flex-wrap '>
           {
             ProColor.map((item, index) => {
-              return <div className='flex flex-col justify-center items-center w-[32%] '
+              return <div onClick={() => handleColor(item.colorName)}
+                className='flex flex-col justify-center items-center w-[32%] '
                 key={index}>
-                <div className={`w-[25px] h-[25px] rounded-full ${item.color} border-black border`}></div>
+              <div className={`w-[25px] h-[25px] rounded-full ${item.color}
+               border-black border flex items-center justify-center text-xl
+                ${item.colorName === "White" ? "text-black" : "text-white"}`}>
+              {
+                 clickedColor.includes(item.colorName) ?  <AiOutlineCheck/> : ""
+              }
+              </div>
+               
                 <p>{item.colorName}</p>
+                
               </div>
             })
           }
