@@ -4,6 +4,7 @@ import Navbar from "./components/common/Navbar";
 import Home from "../src/pages/Home"
 import Footer from "./components/common/Footer";
 import SubCategorieWisePage from "./pages/SubCategorieWisePage";
+import SingleProductPage from "./pages/SingleProductPage";
 
 function App() {
   return (
@@ -13,7 +14,8 @@ function App() {
     
     <Routes>
       <Route path="/" element={<Home/>}/>
-      <Route path={`/:id`} element={<SubCategorieWisePage/>}/>
+      <Route path={`/:categoeId/:subCategoreId`} element={<SubCategorieWisePage/>}/>
+      <Route path={`:prouctId`} element={<SingleProductPage/>}/>
     </Routes>
    </div>
    <Footer/>

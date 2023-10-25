@@ -37,6 +37,7 @@ const Home = () => {
 
   return (
     <div className='w-full py-2 '>
+    
       <div className='w-full object-cover'>
         <Swiper
           // install Swiper modules
@@ -63,12 +64,13 @@ const Home = () => {
         </p>
       </div>
       {/* categories */}
-      <div className='bg-slate-50'>
+      <div className='bg-slate-50 '>
        
        {
         category ? <div className='  flex flex-col gap-5'>
           {
             category.categoies.map((item) => {
+            
             if(item.subCategorys.length > 0){
            return <div className=' items-center w-auto'>
             <p className='text-2xl py-2'>Best in {item.categoryName}</p>
@@ -84,7 +86,7 @@ const Home = () => {
                  if(item._id === ele.categoriId){
                   return <div className='flex items-center justify-center '>
                      <SwiperSlide>
-                     <SlidCard cardDetail={ele}/>
+                     <SlidCard cardDetail={ele} categoriId={item._id}/>
                      </SwiperSlide>
                   </div>
                   }
@@ -97,8 +99,9 @@ const Home = () => {
             })
           }
         </div> 
-        : <div className='flex items-center justify-center text-3xl'>Loading....</div>
+        :  <div class="custom-loader flex items-center justify-center  "></div>
       } 
+      
       </div>
     </div>
   )

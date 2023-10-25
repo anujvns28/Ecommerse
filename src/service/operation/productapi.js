@@ -6,7 +6,8 @@ const {
 GET_ALL_PRODUCT_API,
 GET_ALL_CATEGORY_API,
 GET_CATEGORY_SUBCATEGORY,
-GET_SUBCATEGORI_WISE_PRODUCT
+GET_SUBCATEGORI_WISE_PRODUCT,
+GET_SINGLE_PRODUDCT_DETAILS
 } = productEndPoints
 
 export  const getAllProducts = async () => {
@@ -73,6 +74,26 @@ export  const getAllSubCategoryProduct = async (subCategoryId) => {
   }
   catch(error) {
     console.log("SubCategori All Prduct fetching  API ERROR....", error);
+  }
+  return resutl
+  
+}
+
+
+//get Single Product DEtails
+
+export  const getSingleProductDetails = async (productId) => {
+   
+  let resutl 
+  try{
+    
+    const response = await apiConnector("POST",GET_SINGLE_PRODUDCT_DETAILS,{productId:productId});
+
+    console.log("Single Prduct response ",response)
+    resutl = response.data
+  }
+  catch(error) {
+    console.log("single  Prduct fetching  API ERROR....", error);
   }
   return resutl
   

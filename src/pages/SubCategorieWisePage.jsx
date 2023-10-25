@@ -2,35 +2,47 @@ import React, { useEffect, useState } from 'react'
 import Sidebar from '../components/common/Sidebar'
 import {IoFilterSharp} from "react-icons/io5"
 import { AiOutlineDown } from "react-icons/ai"
-import { getAllSubCategoryProduct } from '../service/operation/productapi'
-import { useLocation } from 'react-router-dom'
+import { getAllSubCategories, getAllSubCategoryProduct } from '../service/operation/productapi'
+import { useLocation, useParams } from 'react-router-dom'
 import SlidCard from '../components/core/SlidCard'
 import Card from '../components/common/Card'
 import { useDispatch, useSelector } from 'react-redux'
+import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/autoplay';
 
 
 const SubCategorieWisePage = () => {
 const dispatch = useDispatch()
 const location = useLocation();
 const subCategoryId = location.pathname.split("/").at(-1)
+const categorieId = location.pathname.split("/").at(-2)
 const [products,setProducts] = useState()
-
+const [categorie,setCategorie] = useState()
 const {product} = useSelector((state) =>state.product)
 
- 
+
 const fetchProducts = async() =>{
 const result = await getAllSubCategoryProduct(subCategoryId);
+
+ const allOtherSubCategories = await getAllSubCategories(categorieId);
+
 if(result){
   setProducts(result.subCategoryProducts)
-  console.log(result,"this is result")
-  
 }
+ if(allOtherSubCategories){
+   setCategorie(allOtherSubCategories.subCategorys)
+ }
 }
  useEffect(() =>{
  fetchProducts()
-  },[])
+  },[subCategoryId])
 
-  console.log("this is product form slice",product)
+  console.log("this is product form slice",products)
+  
 
   return (
     <div  className='flex flex-col gap-3 px-2 mx-auto'>
@@ -88,11 +100,43 @@ if(result){
             </div>  : <div className='flex items-center justify-center h-screen'>Not Found</div>
           }
         </div> 
-          :<div className='flex items-center justify-center h-screen'>Loading...</div>
+          :<div className='flex items-center justify-center h-screen custom-loader'></div>
        
        }
      </div>
       </div> 
+
+      <div>
+        <h1 className='text-2xl font-semibold py-3 '>Similar Shouses Brands</h1>
+        {
+          categorie ? 
+          <div>
+            {
+              <Swiper
+              modules={[Navigation, Pagination, Scrollbar, Autoplay]}
+              navigation
+              slidesPerView={4}
+              spaceBetween={15}
+              >
+                <div className='items-center  '>
+                {
+                   categorie.map((ele) =>{
+                   if(ele._id !== subCategoryId){
+                    return <div className='flex items-center justify-center '>
+                       <SwiperSlide>
+                      <SlidCard cardDetail={ele} categoriId={categorieId}></SlidCard>
+                       </SwiperSlide>
+                    </div>
+                    }
+                    })
+                }
+                </div>
+              </Swiper>
+            }
+          </div>
+          : <div>Loading...</div>
+        }
+      </div>
       
     </div>
   )

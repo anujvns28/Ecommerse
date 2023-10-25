@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllSubCategoryProduct } from '../../service/operation/productapi'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import { setFilterProduct } from '../../slice/produc'
 import {AiOutlineCheck} from "react-icons/ai"
 
@@ -122,6 +122,7 @@ const Sidebar = () => {
   const subCategoryId = location.pathname.split("/").at(-1)
   const [products, setProducts] = useState()
   const { product } = useSelector((state) => state.product)
+  const params = useParams();
 
   const [checkedValue, setChecedValues] = useState([]);
   const [cehckedValuePrice, setCheckValuePrice] = useState([]);
@@ -131,7 +132,7 @@ const Sidebar = () => {
   //Gender wise hedling
   const handleChange = (event) => {
     const { value, checked } = event.target
-
+   
     if (checked) {
       setChecedValues((pre) => [...pre, value])
     } else {
@@ -275,7 +276,12 @@ const Sidebar = () => {
           })
         }
       })
-      setFilterdProduct(proArray.length > 0 ? proArray : filteredProduct)
+      setFilterdProduct(proArray.length > 0 ? proArray : filteredProduct )
+      if (checkedValue.length === 0 && cehckedValuePrice.length === 0) {
+        setFilterdProduct(filteredProduct)
+      }else{
+        setFilterdProduct( proArray)
+      }
     }
 
 

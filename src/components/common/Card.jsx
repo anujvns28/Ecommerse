@@ -2,10 +2,11 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const Card = ({cardData}) => {
+
   return (
     <div className=''>
       
-      <Link to={`/`}> 
+      <Link to={`/${cardData._id}`}> 
     <div className=' flex justify-center items-center bg-slate-100 border-b rounded-lg hover:scale-[1.03] transition-all duration-500'>  
     <img className='w-rounded-xl object-cover h-[350px]' 
     src={cardData.productMainImage} />
