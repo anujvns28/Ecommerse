@@ -5,6 +5,8 @@ import Home from "../src/pages/Home"
 import Footer from "./components/common/Footer";
 import SubCategorieWisePage from "./pages/SubCategorieWisePage";
 import SingleProductPage from "./pages/SingleProductPage";
+import Signup from "./pages/Signup";
+import VeryfyEmail from "./pages/VeryfyEmail";
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
       <Route path="/" element={<Home/>}/>
       <Route path={`/:categoeId/:subCategoreId`} element={<SubCategorieWisePage/>}/>
       <Route path={`:prouctId`} element={<SingleProductPage/>}/>
+      <Route path={"/signup"} element={<Signup/>}/>
+      <Route path={"/verify-email"} element={<VeryfyEmail/>} />
     </Routes>
    </div>
    <Footer/>
