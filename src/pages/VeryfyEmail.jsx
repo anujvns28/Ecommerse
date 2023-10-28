@@ -2,13 +2,14 @@ import React, { useState } from 'react'
 import OtpInput from 'react-otp-input'
 import { BiArrowBack } from "react-icons/bi";
 import { RxCountdownTimer } from "react-icons/rx";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { signupUser } from '../service/operation/auth';
 
 const VeryfyEmail = () => {
     const {signupData} = useSelector((state) => state.auth);
     const [otp, setOtp] = useState('');
+    const navigat = useNavigate();
 
     const handleSubmint = async(event) =>{
       event.preventDefault();
@@ -18,6 +19,7 @@ const VeryfyEmail = () => {
       }
 
       await signupUser(userData)
+      navigat("/login")
     }
 
     

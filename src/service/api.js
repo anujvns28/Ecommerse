@@ -10,5 +10,6 @@ GET_SINGLE_PRODUDCT_DETAILS : BASE_URL + "/product/getSingleProductDetails"
 
 export const authEndPoints = {
     GET_OTP : BASE_URL + "/user/sendOtp",
-    SIGN_UP_API : BASE_URL + "/user/signup"
+    SIGN_UP_API : BASE_URL + "/user/signup",
+    LOGIN_API : BASE_URL + "/user/login"
 }

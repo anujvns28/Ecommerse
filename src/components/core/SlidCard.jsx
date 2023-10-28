@@ -11,7 +11,7 @@ const SlidCard = ({cardDetail,categoriId}) => {
     </div>
 
     <div className="flex flex-col gap-2 px-1 py-3 items-center">
-            <p className="text-xl text-richblack-5">{cardDetail.name}</p>
+          <p className="text-xl text-richblack-5">{cardDetail.name}</p>
     </div>
       </Link>
     </div>
