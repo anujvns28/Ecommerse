@@ -9,6 +9,9 @@ import 'swiper/css/pagination';
 import 'swiper/css/autoplay';
 import SlidCard from '../components/core/SlidCard';
 import Card from '../components/common/Card';
+import { useDispatch } from 'react-redux';
+import { addToCart, setTotalPrice } from '../slice/produc';
+import { toast } from 'react-toastify';
 
 const SingleProductPage = () => {
     const { prouctId } = useParams();
@@ -16,6 +19,7 @@ const SingleProductPage = () => {
     const [showImage, setShowImage] = useState();
     const [showReleatedProduct,setShowReleatedProduct] = useState();
     const [releatedSubCategories,setSubCategories] = useState();
+    const dispatch = useDispatch()
 
     const fetchProductDetails = async () => {
         const result = await getSingleProductDetails(prouctId);
@@ -37,6 +41,11 @@ const SingleProductPage = () => {
     useEffect(() => {
         fetchProductDetails()
     }, [prouctId])
+
+    const handleCart = (productDetail) =>{
+      dispatch(addToCart(productDetail))
+      dispatch(setTotalPrice(productDetail.price))
+    }
 
 
      console.log("pringting single product details ", releatedSubCategories)
@@ -81,6 +90,16 @@ const SingleProductPage = () => {
                         <p className='text-slate-400'>(Also includes all applicable duties)</p>
                     </div>
                     <p className='font-semibold '>Color : {productDetail ? productDetail.color : "Loading..."}</p>
+
+                    <div className='flex flex-col gap-3'>
+                     <div className='flex flex-row gap-3'>
+                     <button onClick={() => handleCart(productDetail)}
+                     className='rounded-full text-xl px-2 py-4 w-[48%] bg-black  text-white'>Add to Cart</button>
+                      <button className='rounded-full text-xl px-2 py-4 w-[48%]  border border-black text-black'>Wishlist</button>
+                     </div>
+
+                      <button className='rounded-full text-xl px-2 py-4 bg-yellow-500 w-full text-white'>Buy Now</button>
+                    </div>
                 </div>
             </div>
    {/* relaeatd products */}

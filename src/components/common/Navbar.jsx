@@ -13,6 +13,7 @@ const Navbar = () => {
   const [subCategoires, setSubCategories] = useState(null)
   const { token } = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.auth);
+  const { cart } = useSelector((state) => state.product);
 
   const navLinks = [
     {
@@ -122,7 +123,7 @@ const Navbar = () => {
           })
         }
       </div>
-      <div className='flex justify-between w-[20%] items-center'>
+      <div className='flex justify-between w-[24%] items-center'>
         <div className='flex hover:border border-solid px-1'>
         <p className='text-2xl font-bold'><LiaUser/></p>
           {
@@ -134,9 +135,15 @@ const Navbar = () => {
         
         </div>
        
-        <div className='flex gap-3 w-[50%] items-center'>
+        <div className='flex gap-2 w-[52%] items-center relative'>
         {
           token && <p className='text-2xl'>
+           {
+            cart.length > 0 ?  <div className='w-5 h-5 bg-red-500 rounded-full absolute -top-1 left-3'>
+             <p className='text-white text-xs flex items-center justify-center'> {cart.length}</p>
+            </div> 
+            : ""
+           }
             <Link to={"/cart"}> <AiOutlineShoppingCart />
             </Link>
           </p>

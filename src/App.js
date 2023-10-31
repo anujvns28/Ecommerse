@@ -8,6 +8,7 @@ import SingleProductPage from "./pages/SingleProductPage";
 import Signup from "./pages/Signup";
 import VeryfyEmail from "./pages/VeryfyEmail";
 import Login from "./pages/Login";
+import Cart from "./pages/Cart";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
       <Route path={`:prouctId`} element={<SingleProductPage/>}/>
       <Route path={"/signup"} element={<Signup/>}/>
       <Route path={"/login"} element={<Login/>}/>
+      <Route path={"/cart"} element={<Cart/>}/>
       <Route path={"/verify-email"} element={<VeryfyEmail/>} />
     </Routes>
    </div>
