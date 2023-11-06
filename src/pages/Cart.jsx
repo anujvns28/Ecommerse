@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import cartImg from "../assets/empty-cart.jpg"
 import { Link, useLocation } from 'react-router-dom'
@@ -6,14 +6,19 @@ import CartCard from '../components/core/CartCard'
 
 const Cart = () => {
   const { cart } = useSelector((state) => state.product)
-  const { totalPrice } = useSelector((state) => state.product)
- 
-  
+  let [price,setPrice] = useState(0); 
 
- 
-  
-
-  console.log(totalPrice, "this is cart prduct")
+  const setTotalPrice = () =>{
+    let productPrice = 0
+    cart.map((pro) =>{
+      productPrice = productPrice + pro.price
+    })
+    setPrice(productPrice);
+  }
+  useEffect(() =>{
+    setTotalPrice()
+  },[cart])
+  console.log(cart, "this is cart prduct")
   return (
     <div className=' flex flex-col items-center justify-center gap-4 border border-solid w-[80%] mx-auto'>
       {
@@ -36,7 +41,7 @@ const Cart = () => {
               <div className='bg-slate-400 rounded-md p-3'>
                 <div className='flex items-center justify-between border-b border-solid p-3 text-2xl'>
                   <h2>SUBTOTAL</h2>
-                  <h2> ₹ 5567</h2>
+                  <h2>{price}</h2>
                 </div>
                 <p className='p-3'>The subtotal reflects the total price of your order, including duties and taxes, before any applicable discounts. It does not include delivery costs and international transaction fees.</p>
                 
