@@ -4,7 +4,8 @@ import { json } from 'react-router-dom'
 const initialState = {
     signupData: null,
     token : localStorage.getItem("token") ? JSON.parse(localStorage.getItem("token")) : null,
-    user : localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null
+    user : localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null,
+    loading : true,
 }
 
 export const authSlice = createSlice({
@@ -19,11 +20,14 @@ export const authSlice = createSlice({
         },
         setUser(state,value){
             state.user = value.payload
+        },
+        setLoading(state,value){
+            state.loading = value.payload
         }
     },
 })
 
 // Action creators are generated for each case reducer function
-export const {setsignupData,setToken,setUser} = authSlice.actions
+export const {setsignupData,setToken,setUser,setLoading} = authSlice.actions
 
 export default authSlice.reducer

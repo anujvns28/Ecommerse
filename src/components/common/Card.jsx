@@ -1,14 +1,15 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const Card = ({cardData}) => {
+const Card = ({cardData,showFilter }) => {
+  
 
   return (
-    <div className=''>
+    <div className={``}>
       
       <Link to={`/${cardData._id}`}> 
     <div className=' flex justify-center items-center bg-slate-100 border-b rounded-lg hover:scale-[1.03] transition-all duration-500'>  
-    <img className='w-rounded-xl object-cover h-[350px]' 
+    <img className={`w-rounded-xl object-cover  ${showFilter ? "h-[350px] transition-all  duration-500" : "h-[450px] transition-all  duration-500"}`} 
     src={cardData.productMainImage} />
     </div>
 

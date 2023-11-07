@@ -208,9 +208,12 @@ const Sidebar = () => {
 
   let lowerPrice
   let upperPrice
+  
 
   //this function is filtering product
   const filterFunction = () => {
+    
+   
 
     let filteredProduct = []
     if (checkedValue.length > 0) {

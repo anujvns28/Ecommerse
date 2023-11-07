@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import logo from "../../assets/logo.svg"
 import { AiOutlineShoppingCart } from "react-icons/ai"
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { AiOutlineDown } from "react-icons/ai"
 import { getAllCategories, getAllSubCategories } from '../../service/operation/productapi'
 import { HiArrowLongRight } from "react-icons/hi2"
@@ -14,6 +14,7 @@ const Navbar = () => {
   const { token } = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.auth);
   const { cart } = useSelector((state) => state.product);
+  const nevagite  = useNavigate()
 
   const navLinks = [
     {
@@ -52,14 +53,16 @@ const Navbar = () => {
   }, [])
 
   const subCategories = async (categoryID) => {
-    console.log(categoryID)
     const result = await getAllSubCategories(categoryID);
     if (result) {
       setSubCategories(result);
     }
   }
 
-  console.log(subCategoires, "subcategories")
+  const handleSubCategories = (categoryId,subCategoriId) =>{
+    nevagite(`${categoryId}/${subCategoriId}`)
+  }
+
 
   return (
 
@@ -87,18 +90,19 @@ const Navbar = () => {
                   {
                     category ? <div >
                       {
-                        category.categoies.map((item, index) => {
-                          return <div key={index} onMouseOver={() => subCategories(item._id)}
+                        category.categoies.map((category, index) => {
+                          return <div key={index} 
                             className='hover:bg-slate-200 anuj py-4 px-4 rounded-md relative'>
-                            <div className='flex justify-between'>
-                              {item.categoryName}
+                            <div onMouseOver={() => subCategories(category._id)}
+                            className='flex justify-between'>
+                              {category.categoryName}
                               <p className='text-2xl'>  <HiArrowLongRight /></p>
                             </div>
-                            <div
-                              className=" subCategories absolute p-4 rounded-md bg-slate-200 ">
+                            <div className=" subCategories absolute p-4 rounded-md bg-slate-200  ">
                               {
                                 subCategoires ? subCategoires.subCategorys.map((item, index) => {
-                                  return <div className='hover:bg-slate-300  py-4 px-4 rounded-md relative'>
+                                  return <div onClick={() => handleSubCategories(category._id,item._id)}
+                                  className='hover:bg-slate-300  py-4 px-4 rounded-md relative '>
                                     {
                                       item.name
                                     }
