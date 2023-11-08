@@ -93,7 +93,7 @@ const SubCategorieWisePage = () => {
 
   return (
     <div className='flex flex-col gap-3 px-2 mx-auto'>
-      <div className='w-full flex items-center justify-between text-black py-2 sticky top-0 z-50  mt-8 bg-white '>
+      <div className='w-full flex items-center justify-between z-10 text-black py-2 sticky top-0 z-50  mt-8 bg-white '>
         {
           products ?
 
