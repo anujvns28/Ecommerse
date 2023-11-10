@@ -9,7 +9,6 @@ const SlidCard = ({cardDetail,categoriId}) => {
     <img className='w-rounded-xl object-cover  h-[350px]' 
     src={cardDetail.image} width={400} />
     </div>
-
     <div className="flex flex-col gap-2 px-1 py-3 items-center">
           <p className="text-xl text-richblack-5">{cardDetail.name}</p>
     </div>
