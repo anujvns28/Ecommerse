@@ -5,7 +5,8 @@ GET_ALL_PRODUCT_API : BASE_URL + "/product/fetchAllProducts",
 GET_ALL_CATEGORY_API : BASE_URL + "/product/fetchallCategory",
 GET_CATEGORY_SUBCATEGORY : BASE_URL + "/product/fetchallSubCategory",
 GET_SUBCATEGORI_WISE_PRODUCT : BASE_URL + "/product/getSubCategoryWiseProduct",
-GET_SINGLE_PRODUDCT_DETAILS : BASE_URL + "/product/getSingleProductDetails"
+GET_SINGLE_PRODUDCT_DETAILS : BASE_URL + "/product/getSingleProductDetails",
+CREATE_PRODUCT_URL:BASE_URL + "/product/createProduct"
 }
 
 export const authEndPoints = {

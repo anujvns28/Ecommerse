@@ -7,7 +7,8 @@ GET_ALL_PRODUCT_API,
 GET_ALL_CATEGORY_API,
 GET_CATEGORY_SUBCATEGORY,
 GET_SUBCATEGORI_WISE_PRODUCT,
-GET_SINGLE_PRODUDCT_DETAILS
+GET_SINGLE_PRODUDCT_DETAILS,
+CREATE_PRODUCT_URL
 } = productEndPoints
 
 export  const getAllProducts = async () => {
@@ -94,6 +95,32 @@ export  const getSingleProductDetails = async (productId) => {
   }
   catch(error) {
     console.log("single  Prduct fetching  API ERROR....", error);
+  }
+  return resutl
+  
+}
+
+// createing product 
+export  const creteProduct = async (productData) => {
+   
+  let resutl 
+  try{
+    
+    const response = await apiConnector("POST",
+    CREATE_PRODUCT_URL,
+    productData,
+    {
+      "Content-Type": "multipart/form-data",
+    }
+    );
+
+    console.log("New product response ",response)
+    resutl = response.data
+    toast.success("product created sucess")
+  }
+  catch(error) {
+    console.log("New product  API ERROR....", error);
+    toast.error("product not created")
   }
   return resutl
   
