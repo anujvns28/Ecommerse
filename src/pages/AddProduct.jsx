@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { creteProduct, getAllCategories, getAllSubCategories } from '../service/operation/productapi'
 import { useSelector } from 'react-redux'
+import _ from "lodash"
 
 const AddProduct = () => {
   const ProColor = [
@@ -133,21 +134,31 @@ const AddProduct = () => {
    console.log(productData)
   }
 
+  const imgData = new FormData();
+  
+
   const handleMainImg  = (e) =>{
     const file = e.target.files[0]
     if(file){
       setMainImg(file)
     }
+    imgData.append("file",file)
+    console.log(imgData)
   }
- let arr = []
+  
+  let names
   const handlePrImgs  = (e) =>{
     console.log("calling",productData)
-    let file = e.target.files[1]
-  //  const imgs = Array.from(file)
-   console.log(file)
-    setPrImg(file)
-   
+    let files = e.target.files
+    const imgs = Array.from(files)
+    const obj = Object.assign({},imgs)
+  
+    setPrImg(obj)
+
+console.log(obj,'adfjklasdjf')
   }
+
+  
   
   const productData = {
     ...formData,
