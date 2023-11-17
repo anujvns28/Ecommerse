@@ -104,6 +104,7 @@ export  const getSingleProductDetails = async (productId) => {
 export  const creteProduct = async (productData) => {
    
   let resutl 
+  const loadId = toast.loading("loading...")
   try{
     
     const response = await apiConnector("POST",
@@ -122,6 +123,7 @@ export  const creteProduct = async (productData) => {
     console.log("New product  API ERROR....", error);
     toast.error("product not created")
   }
+  toast.dismiss(loadId)
   return resutl
   
 }

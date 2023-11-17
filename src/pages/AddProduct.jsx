@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { creteProduct, getAllCategories, getAllSubCategories } from '../service/operation/productapi'
 import { useSelector } from 'react-redux'
 import _ from "lodash"
+import SelectImg from '../components/core/productCreat/SelectImg'
 
 const AddProduct = () => {
   const ProColor = [
@@ -75,6 +76,7 @@ const AddProduct = () => {
       gender: "Older Child"
     }
   ]
+
   const [SubcategoriesId, setSubcategoriesId] = useState()
   const [categoriesId, setcategoriesId] = useState()
   const [isCategorie, setIsCategore] = useState()
@@ -82,9 +84,8 @@ const AddProduct = () => {
   let subCat = SubcategoriesId ? SubcategoriesId[0]._id : null
   const { user } = useSelector((state) => state.auth)
   const [mainImg,setMainImg] = useState()
-  const [prImg,setPrImg] = useState()
-
-
+  const [mainImgUrl,setMainImgUrl] = useState()
+ 
   const fatchCategory = async () => {
     const category = await getAllCategories()
     if (category) {
@@ -92,13 +93,15 @@ const AddProduct = () => {
     }
   }
 
+  
+
   const fetchSubCategory = async (category) => {
     const result = await getAllSubCategories(category);
     if (result) {
       setSubcategoriesId(result.subCategorys)
     }
   }
-
+  
   const [formData, setFormData] = useState({
     productName: "",
     desc: "",
@@ -106,6 +109,11 @@ const AddProduct = () => {
     color: ProColor[0].colorName,
     forWhom: gender[0].gender,
     subCategory: subCat,
+    img1:"",
+    img2:"",
+    img3:"",
+    img4:"",
+    img5:""
   })
 
   useEffect(() => {
@@ -118,57 +126,45 @@ const AddProduct = () => {
   }
 
   const handleChange = (e) => {
+    
     const { value, name, type, files } = e.target
-
     setFormData((prev) => ({
       ...prev,
-      [name]: type == "file" ? files : value
+      [name]: type == "file" ? files[0] : value
     }))
 
   }
 
   const handleSubmit = async(e) => {
     e.preventDefault();
-   const result = await creteProduct(productData)
+   const result = await creteProduct(formFullData)
    console.log(result,"this is product result")
-   console.log(productData)
+   console.log(formFullData)
   }
 
-  const imgData = new FormData();
-  
-
-  const handleMainImg  = (e) =>{
+  const handleMainImg  = (e) => {
     const file = e.target.files[0]
     if(file){
       setMainImg(file)
+      const url = URL.createObjectURL(file);
+      setMainImgUrl(url)
     }
-    imgData.append("file",file)
-    console.log(imgData)
   }
   
-  let names
-  const handlePrImgs  = (e) =>{
-    console.log("calling",productData)
-    let files = e.target.files
-    const imgs = Array.from(files)
-    const obj = Object.assign({},imgs)
   
-    setPrImg(obj)
-
-console.log(obj,'adfjklasdjf')
-  }
+const getData = (data) =>{
+  handleChange(data)
+}
 
   
-  
-  const productData = {
+  const formFullData = {
     ...formData,
-    userId: user._id,
-    categoryId: category,
-    images2: mainImg,
-    images:prImg
+    mainImage : mainImg,
+    userId : user._id,
+    categoryId : isCategorie
   }
 
-
+  
   return (
     <div>
       {
@@ -265,33 +261,44 @@ console.log(obj,'adfjklasdjf')
               </select>
             }
           </label>
-          {/* selecting main image */}
+          {/*  main image */}
           <label>
             <p>Select Product Main Image</p>
             <input
               type="file"
               required
               onChange={handleMainImg}
-              name="images"
+              name="mainImg"
             />
           </label>
 
+          <div>
+        {
+          mainImgUrl 
+          ? <div>
+            <img src={mainImgUrl} width={200}/>
+            <button onClick={() => setMainImgUrl()}>Delete</button>
+          </div> 
+          : <div></div>
+        }
+      </div>
 
-          {/* selecting images */}
-          <label>
-            <p>Select Product Names</p>
-            <input
-              type="file"
-              required
-              onChange={handlePrImgs}
-              multiple
-              name="images2"
-            />
-          </label>
+          {/* image 1 */}
+         <SelectImg onSubmit={getData} imgNum={1} /> 
+           {/* images 2*/}
+          <SelectImg onSubmit={getData} imgNum={2} /> 
+           {/* images 3*/}
+           <SelectImg onSubmit={getData} imgNum={3} />
+           {/* images 4*/}
+           <SelectImg onSubmit={getData} imgNum={4} />
+           {/* images 5*/}
+           <SelectImg onSubmit={getData} imgNum={5} />
 
           <button>submit</button>
         </form>
       }
+
+      
     </div>
   )
 }
