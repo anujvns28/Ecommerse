@@ -166,13 +166,14 @@ const getData = (data) =>{
 
   
   return (
-    <div>
+    <div className='w-full py-24 '>
       {
         !isCategorie &&
-        <div>
+        <div className='w-full gap-3  h-full flex  items-center justify-center '>
           <label>
-            <p>Categorie</p>
+            <p className=' text-2xl font-semibold pb-2'>Select Categorie</p>
             <select
+            className='border border-solid w-[400px] p-2 rounded-md text-2xl '
               required
               onChange={(e) => category = e.target.value}
             >
@@ -181,16 +182,20 @@ const getData = (data) =>{
               }
             </select>
           </label>
-          <button onClick={handleNext}>Next</button>
+          <button className='px-5 py-2 bg-yellow-500 rounded-md text-xl mt-10 '
+          onClick={handleNext}>Next
+          </button>
         </div>
       }
       {/* after selecting categore */}
       {
         isCategorie &&
-        <form onSubmit={handleSubmit}>
+        <form className='w-[60%] mx-auto border border-solid p-4 flex flex-col gap-3 rounded-md' 
+        onSubmit={handleSubmit}>
           <label>
-            <p>Product Name</p>
+            <p className='text-xl font-semibold pb-1'>Product Name</p>
             <input
+              className='w-full border border-black outline-none p-3 rounded-md text-xl'
               type="string"
               required
               placeholder='Enter Product Name'
@@ -198,20 +203,12 @@ const getData = (data) =>{
               onChange={handleChange}
             />
           </label>
-          <label>
-            <p>Product Details</p>
-            <textarea
-              type="string"
-              required
-              placeholder='Enter Product Details'
-              name='desc'
-              onChange={handleChange}
-            />
-          </label>
 
-          <label>
-            <p>Price</p>
+          <div className='flex justify-between  w-full  '>
+          <label className='w-[49%]'>
+            <p className='text-xl font-semibold pb-1'>Price</p>
             <input
+             className='w-full border border-black outline-none p-3 rounded-md text-xl'
               type="Number"
               required
               placeholder='Enter Price'
@@ -220,9 +217,25 @@ const getData = (data) =>{
             />
           </label>
 
-          <label>
-            <p>Color</p>
+          <label className='w-[49%]'>
+            <p className='text-xl font-semibold pb-1'>Discount Price</p>
+            <input
+             className='w-full border border-black outline-none p-3 rounded-md text-xl'
+              type="Number"
+              required
+              placeholder='Enter Price'
+              name='price'
+              onChange={handleChange}
+            />
+          </label>
+
+          </div>
+
+          <div className='flex justify-between  w-full  '>
+          <label className='w-[49%]'>
+            <p className='text-xl font-semibold pb-1'>Select Color</p>
             <select
+              className='w-full border border-black outline-none p-3 rounded-md text-xl'
               required
               name='color'
               onChange={handleChange}
@@ -233,9 +246,10 @@ const getData = (data) =>{
             </select>
           </label>
 
-          <label>
-            <p>Gender</p>
+          <label className='w-[49%]'>
+            <p className='text-xl font-semibold pb-1'>Select Gender</p>
             <select
+              className='w-full border border-black outline-none p-3 rounded-md text-xl'
               required
               name='forWhom'
               onChange={handleChange}
@@ -246,11 +260,14 @@ const getData = (data) =>{
             </select>
           </label>
 
-          <label>
-            <p>Select Compny</p>
+          </div>
+
+          <label className='w-full'>
+            <p className='text-xl font-semibold pb-1'>Select Compny</p>
             {
               SubcategoriesId &&
               <select
+              className='w-full border border-black outline-none p-3 rounded-md text-xl'
                 required
                 name='subCategory'
                 onChange={handleChange}
@@ -261,25 +278,45 @@ const getData = (data) =>{
               </select>
             }
           </label>
-          {/*  main image */}
-          <label>
-            <p>Select Product Main Image</p>
-            <input
-              type="file"
+
+          <label className='w-full'>
+            <p className='text-xl font-semibold '>Product Details</p>
+            <textarea
+              type="string"
+              className='w-full h-[200px] border border-black outline-none p-3 rounded-md text-xl'
               required
-              onChange={handleMainImg}
-              name="mainImg"
+              placeholder='Enter Product Details'
+              name='desc'
+              onChange={handleChange}
             />
           </label>
 
-          <div>
+          {/*  main image */}
+          <p className='text-xl font-semibold '>Product Main Image</p>
+          <div className= 'w-[50%] h-[250px] border border-black rounded-md flex items-center justify-center'>
         {
           mainImgUrl 
-          ? <div>
-            <img src={mainImgUrl} width={200}/>
+          ? <div className=' h-[250px] bg-cover p-3'>
+            <img  className='w-full h-auto bg-cover aspect-video '
+            src={mainImgUrl} />
             <button onClick={() => setMainImgUrl()}>Delete</button>
           </div> 
-          : <div></div>
+          :<div>
+           <label >
+             <p className='text-xl font-semibold w-full h-[250px] cursor-pointer  flex items-center justify-center'>
+               Select Image
+             </p>
+             <input
+               className='invisible '
+               type="file"
+               required
+               onChange={handleMainImg}
+               name="mainImg"
+               
+             />
+           </label>
+          </div>
+ 
         }
       </div>
 
