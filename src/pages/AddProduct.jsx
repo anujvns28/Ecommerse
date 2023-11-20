@@ -318,6 +318,7 @@ const getData = (data) =>{
           </div>
  
         }
+        
       </div>
 
           {/* image 1 */}
@@ -331,7 +332,7 @@ const getData = (data) =>{
            {/* images 5*/}
            <SelectImg onSubmit={getData} imgNum={5} />
 
-          <button>submit</button>
+          <button className='px-3 py-2 rounded-md bg-yellow-500 items-start w-[150px] text-xl'>submit</button>
         </form>
       }
 

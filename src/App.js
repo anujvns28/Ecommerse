@@ -10,6 +10,7 @@ import VeryfyEmail from "./pages/VeryfyEmail";
 import Login from "./pages/Login";
 import Cart from "./pages/Cart";
 import AddProduct from "./pages/AddProduct";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
       <Route path={"/cart"} element={<Cart/>}/>
       <Route path={"/verify-email"} element={<VeryfyEmail/>} />
       <Route path={"/create-product"} element={<AddProduct/>} />
+      <Route path={"/my-profile"} element={<Profile/>} />
     </Routes>
    </div>
    <Footer/>

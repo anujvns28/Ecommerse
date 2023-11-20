@@ -20,7 +20,7 @@ const SelectImg = (props) => {
         setPrImg(null)
     }
     return (
-        <div>
+        <div className='w-full'>
             <p className='text-xl font-semibold '>Select Image {props.imgNum}</p>
              <div className= 'w-[50%] h-[250px] border border-black rounded-md flex items-center justify-center'>
             {

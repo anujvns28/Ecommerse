@@ -14,3 +14,7 @@ export const authEndPoints = {
     SIGN_UP_API : BASE_URL + "/user/signup",
     LOGIN_API : BASE_URL + "/user/login"
 }
+
+export const profileEndPoints = {
+    GET_PROFILE_DATA : BASE_URL + "/user/fetchUserData"
+}
