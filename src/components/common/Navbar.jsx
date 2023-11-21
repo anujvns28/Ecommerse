@@ -54,7 +54,7 @@ const Navbar = () => {
       id: 1,
       name: "My Profile",
       icon: <AiOutlineUser />,
-      link: "/my-profile",
+      link: "/my-profile/view-profile",
     },
     {
       id: 2,
@@ -77,7 +77,7 @@ const Navbar = () => {
       id: 1,
       name: "My Profile",
       icon: <AiOutlineUser />,
-      link: "/my-profile",
+      link: "/my-profile/view-profile",
     },
     {
       id: 2,

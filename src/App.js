@@ -11,6 +11,12 @@ import Login from "./pages/Login";
 import Cart from "./pages/Cart";
 import AddProduct from "./pages/AddProduct";
 import Profile from "./pages/Profile";
+import ProfileInfo from "./components/core/profile/ProfileInfo";
+import ProfileImg from "./components/core/profile/ProfileImg";
+import ViewAddress from "./components/core/profile/ViewAddress";
+import UpdateProfile from "./components/core/profile/UpdateProfile";
+import UpdateImg from "./components/core/profile/UpdateImg";
+import AddAddress from "./components/core/profile/AddAddress";
 
 function App() {
   return (
@@ -27,7 +33,16 @@ function App() {
       <Route path={"/cart"} element={<Cart/>}/>
       <Route path={"/verify-email"} element={<VeryfyEmail/>} />
       <Route path={"/create-product"} element={<AddProduct/>} />
-      <Route path={"/my-profile"} element={<Profile/>} />
+
+
+      <Route  element={<Profile/>} > 
+      <Route path={"my-profile/view-profile"} element={<ProfileInfo/>} />
+      <Route path={"my-profile/view-profileImg"} element={<ProfileImg/>} />
+      <Route path={"my-profile/view-address"} element={<ViewAddress/>} />
+      <Route path={"my-profile/update-profile"} element={<UpdateProfile/>} />
+      <Route path={"my-profile/update-profileImg"} element={<UpdateImg/>} />
+      <Route path={"my-profile/add-address"} element={<AddAddress/>} />
+      </Route>
     </Routes>
    </div>
    <Footer/>
