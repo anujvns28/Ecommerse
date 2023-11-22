@@ -1,16 +1,19 @@
 import React, { useState } from 'react'
-import { useOutletContext } from 'react-router-dom'
+import { useNavigate, useOutletContext } from 'react-router-dom'
 import { updateProfile } from '../../../service/operation/profil'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 const UpdateProfile = () => {
+  
 
     const gender = [
         {gender:"Male"},
         {gender:"Female"}
     ]
+    const nevigate = useNavigate();
+    const dispatch = useDispatch();
     const {user} = useSelector((state) => state.auth);
-    const [userData] = useOutletContext()
+    const [userData,getUserDAta] = useOutletContext()
     const [formData,setFormData] = useState({
         firstName:userData.firstName,
         lastName:userData.lastName,
@@ -28,7 +31,8 @@ const UpdateProfile = () => {
 
     const data = {
         ...formData,
-        userId:user._id
+        userId:user._id,
+        image:user.image
     }
 
     
@@ -36,10 +40,10 @@ const UpdateProfile = () => {
     const handleSubmit = (event) =>{
         event.preventDefault();
         console.log(formData,"this is form data")
-        updateProfile(data)
+        updateProfile(data,nevigate,getUserDAta,dispatch)
     }
 
-    console.log(user._id)
+  
 
   return (
     <div>

@@ -66,7 +66,7 @@ const Profile = () => {
 
   useEffect(() => {
     getUserDAta();
-  }, [])
+  }, []) 
   return (
     <div className='w-[1260px] mx-auto'>
       {
@@ -121,7 +121,7 @@ const Profile = () => {
               </div>
             </div>
             <div className='border border-black w-[75%]  p-6 flex flex-col gap-3'>
-           <Outlet context={[userData]}/>
+           <Outlet context={[userData,getUserDAta]} />
             </div>
           </div>
           : <div className='w-full h-full flex items-center justify-center'>Loading...</div>
