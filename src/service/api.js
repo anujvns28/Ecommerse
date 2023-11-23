@@ -18,5 +18,7 @@ export const authEndPoints = {
 export const profileEndPoints = {
     GET_PROFILE_DATA : BASE_URL + "/user/fetchUserData",
     UPDATE_PROFILE : BASE_URL + "/user/updateProfile",
-    UPDATE_PROFILE_IMG : BASE_URL + "/user/updateProfileImg"
+    UPDATE_PROFILE_IMG : BASE_URL + "/user/updateProfileImg",
+    ADD_ADDRESS : BASE_URL + "/user/addAddress",
+    DELETE_ADDRESS : BASE_URL + "/user/deleteAddres"
 }

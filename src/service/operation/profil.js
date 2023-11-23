@@ -7,7 +7,9 @@ import { setUser } from "../../slice/auth";
 const {
     GET_PROFILE_DATA,
     UPDATE_PROFILE,
-    UPDATE_PROFILE_IMG
+    UPDATE_PROFILE_IMG,
+    ADD_ADDRESS,
+    DELETE_ADDRESS
     } = profileEndPoints
 
 export const FetchUserData = async (data) => {
@@ -49,7 +51,7 @@ export const updateProfile = async (data,nevigate,getUserDAta,dispatch) => {
 }
 
 
-export const updateProfileImg = async (data,nevagite,getUserDAta) => {
+export const updateProfileImg = async (data,nevagite,getUserDAta,dispatch) => {
     const toastId = toast.loading("Loading...")
     let result 
     try {
@@ -66,10 +68,52 @@ export const updateProfileImg = async (data,nevagite,getUserDAta) => {
         toast.success("Profile image updated")
         nevagite("/my-profile/view-profileImg")
         getUserDAta()
+        dispatch(setUser(result.data))
     }
     catch (error) {
         console.log("updating profile img api error....", error);
         toast.error("Error in UPdating")
+    }
+    toast.dismiss(toastId)
+    return result
+
+}
+
+
+export const addNewAddress = async (data,nevagite,getUserDAta) => {
+    const toastId = toast.loading("Loading...")
+    let result 
+    try {
+        const response = await apiConnector("POST", ADD_ADDRESS , data);
+        console.log("Adding Address resonse data", response);
+        result = response.data
+        toast.success("Profile updated")
+        nevagite("/my-profile/view-address")
+        getUserDAta()
+    }
+    catch (error) {
+        console.log("updating profile api error....", error);
+        toast.error("Error in UPdating")
+    }
+    toast.dismiss(toastId)
+    return result
+
+}
+
+
+export const deleteAddress = async (data,getUserDAta) => {
+    const toastId = toast.loading("Loading...")
+    let result 
+    try {
+        const response = await apiConnector("DELETE", DELETE_ADDRESS , data);
+        console.log("Deleting Address resonse data", response);
+        result = response.data
+        toast.success("Address Deleted")
+        getUserDAta()
+    }
+    catch (error) {
+        console.log("deleting address api error....", error);
+        toast.error("Error in Deletig")
     }
     toast.dismiss(toastId)
     return result

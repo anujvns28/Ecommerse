@@ -9,6 +9,7 @@ const UpdateImg = () => {
   const [imgUrl,setImgUrl] = useState();
   const nevagite = useNavigate();
   const {user} = useSelector((state) => state.auth)
+  const dispatch = useDispatch();
 
   const handleChange = (e) =>{
    setProfileImg(e.target.files[0])
@@ -24,7 +25,7 @@ const UpdateImg = () => {
 
   const handleSubmit = (e) =>{
    e.preventDefault();
-   updateProfileImg(data,nevagite,getUserDAta)
+   updateProfileImg(data,nevagite,getUserDAta,dispatch)
 
   }
   return (
