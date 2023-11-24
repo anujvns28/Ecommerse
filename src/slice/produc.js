@@ -6,6 +6,9 @@ const initialState = {
     cart:localStorage.getItem("cart")
     ? JSON.parse(localStorage.getItem("cart"))
     : [],
+    wishlist:localStorage.getItem("wishlist") 
+    ? JSON.parse(localStorage.getItem("wishlist"))
+    : []
     
 }
 export const counterSlice = createSlice({
@@ -29,12 +32,30 @@ export const counterSlice = createSlice({
         removeCart(state,value){
         const index = state.cart.findIndex((item) => item._id === value.payload._id)    
         state.cart.splice(index,1)   
-        localStorage.removeItem("cart",value.payload)   
+        localStorage.setItem("cart",JSON.stringify(state.cart))   
         },
+
+        addToWishlist(state,value) {
+         const product = value.payload;
+         const index = state.wishlist.findIndex((item) => item._id === product._id);
+         if(index === -1){
+            state.wishlist.push(product);
+            toast.success("Shouse Added To Wishlist");
+            localStorage.setItem("wishlist",JSON.stringify(state.wishlist))
+         }else{
+            toast.error("Shouse Alredy in Wishlist");
+         }
+        },
+        removeToWishlist(state,value){
+            const product = value.payload;
+            const index = state.wishlist.findIndex((item) => item._id === product._id);
+            state.wishlist.splice(index,1);
+            localStorage.setItem("wishlist",JSON.stringify(state.wishlist))
+        }
     },
 })
 
 // Action creators are generated for each case reducer function
-export const {setFilterProduct,addToCart,removeCart,setTotalPrice} = counterSlice.actions
+export const {setFilterProduct,addToCart,removeCart,addToWishlist,removeToWishlist} = counterSlice.actions
 
 export default counterSlice.reducer

@@ -10,7 +10,7 @@ import 'swiper/css/autoplay';
 import SlidCard from '../components/core/SlidCard';
 import Card from '../components/common/Card';
 import { useDispatch } from 'react-redux';
-import { addToCart, setTotalPrice } from '../slice/produc';
+import { addToCart, addToWishlist, } from '../slice/produc';
 import { toast } from 'react-toastify';
 
 const SingleProductPage = () => {
@@ -44,8 +44,11 @@ const SingleProductPage = () => {
 
     const handleCart = (productDetail) =>{
       dispatch(addToCart(productDetail))
-      dispatch(setTotalPrice(productDetail.price))
     }
+
+   const  handleWishList = (productData) =>{
+    dispatch(addToWishlist(productData))
+   }
 
 
      console.log("pringting single product details ", releatedSubCategories)
@@ -95,7 +98,8 @@ const SingleProductPage = () => {
                      <div className='flex flex-row gap-3'>
                      <button onClick={() => handleCart(productDetail)}
                      className='rounded-full text-xl px-2 py-4 w-[48%] bg-black  text-white'>Add to Cart</button>
-                      <button className='rounded-full text-xl px-2 py-4 w-[48%]  border border-black text-black'>Wishlist</button>
+                      <button onClick={() => handleWishList(productDetail)}
+                      className='rounded-full text-xl px-2 py-4 w-[48%]  border border-black text-black'>Wishlist</button>
                      </div>
 
                       <button className='rounded-full text-xl px-2 py-4 bg-yellow-500 w-full text-white'>Buy Now</button>

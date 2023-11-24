@@ -8,6 +8,10 @@ import { MdAddLocation } from "react-icons/md";
 import { CiCircleInfo } from "react-icons/ci";
 import ProfileInfo from '../components/core/profile/ProfileInfo';
 import { Link, Outlet, matchPath, useLocation, useParams } from 'react-router-dom';
+import { GiRunningShoe } from "react-icons/gi";
+import { AiOutlineShoppingCart } from "react-icons/ai"
+import { AiOutlineHeart } from "react-icons/ai"
+import {AiFillCaretDown} from "react-icons/ai"
 
 
 const Profile = () => {
@@ -47,6 +51,19 @@ const Profile = () => {
       link:"/my-profile/view-address"
     },
   ]
+
+  const myStuff = [
+    {
+      name:"Wishlist",
+      logo:<AiOutlineHeart/>,
+      link:"/my-profile/wishlist"
+    },
+    {
+      name:"Cart",
+      logo:<AiOutlineShoppingCart/>,
+      link:"/cart"
+    },
+  ]
    
   const { user } = useSelector((state) => state.auth);
   const [userData, setUserData] = useState()
@@ -83,11 +100,19 @@ const Profile = () => {
                   <h1 className='text-xl'>{userData.firstName} {userData.lastName}</h1>
                 </div>
               </div>
-              <div className='w-full h-[80%] border border-red-700 p-3 '>
-                 <div className='flex flex-row gap-3 items-center mb-1 border border-black p-3'>
-                  <p className='text-2xl'><CiCircleInfo/></p>
-                  <h1 className='text-xl'>ACCOUNT INFORMATION</h1>
+              <div className='w-full h-full border border-red-700 p-3 '>
+                <details className='cursor-pointer' open>
+               <summary className='flex'>
+               <div className='flex w-full flex-row gap-3 items-center justify-between mb-1 border border-black p-3'>
+                 <div className='flex w-full flex-row gap-3 items-center'>
+                 <p className='text-2xl'><CiCircleInfo/></p>
+                  <h1 className='text-xl'> INFORMATION</h1>
                  </div>
+                  <AiFillCaretDown className={`text-xl text-richblack-300`} />
+                 </div>
+
+
+               </summary>
 
                 {
                   accountInfo.map((item,index) =>{
@@ -100,13 +125,20 @@ const Profile = () => {
                     </Link>
                   })
                 }
+                </details>
 
-                 <div className='flex flex-row gap-3 items-center mb-1 border border-black p-3 mt-4'>
+                 <details className='cursor-pointer'>
+                  <summary className='flex'>
+                  <div className='flex w-full flex-row gap-3 items-center justify-between mb-1 border border-black p-3 mt-4'>
+                  <div className='flex w-full flex-row gap-3 items-center'>
                   <p className='text-2xl'><IoMdSettings/></p>
-                  <h1 className='text-xl'>ACCOUNT SETTINGS</h1>
+                  <h1 className='text-xl'>SETTINGS</h1>
+                  </div>
+                  <AiFillCaretDown className={`text-xl text-richblack-300`} />
                  </div>
+                  </summary>
 
-                 {
+                  {
                   accountSetting.map((item,index) =>{
                     return <Link to={item.link}>
                     <div key={index} className={`flex flex-row gap-3 items-center cursor-pointer   rounded-md  p-3
@@ -117,6 +149,32 @@ const Profile = () => {
                     </Link>
                   })
                 }
+                 </details>
+          
+               <details className='cursor-pointer'>
+                <summary className='flex'>
+                <div className='flex w-full flex-row gap-3 items-center mb-1 border justify-between border-black p-3 mt-4'>
+                  <div className='flex w-full flex-row gap-3 items-center'>
+                  <p className='text-2xl'><GiRunningShoe/></p>
+                  <h1 className='text-xl'>MY STUFF</h1>
+                  </div>
+                  <AiFillCaretDown className={`text-xl text-richblack-300`} />
+                 </div>
+                </summary>
+               
+
+                 {
+                  myStuff.map((item,index) =>{
+                    return <Link to={item.link}>
+                    <div key={index} className={`flex flex-row gap-3 items-center cursor-pointer   rounded-md  p-3
+                        ${matchRoute(item.link) ? "bg-slate-500 text-white" : "hover:text-slate-600"} `}>
+                    <p className='text-2xl'>{item.logo}</p>
+                    <h1 className=''>{item.name}</h1>
+                   </div>
+                    </Link>
+                  })
+                }
+               </details>
 
               </div>
             </div>

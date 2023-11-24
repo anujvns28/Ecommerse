@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import {RiDeleteBin6Line} from "react-icons/ri"
 import { useDispatch } from 'react-redux';
-import { removeCart, setTotalPrice } from '../../slice/produc';
+import { removeCart } from '../../slice/produc';
 
 const CartCard = ({item}) => {
     const [quantity,setQuantity] = useState(1);
@@ -10,14 +10,14 @@ const CartCard = ({item}) => {
 
     const handleChange = (event) =>{
         setQuantity(event.target.value)
-        dispatch(setTotalPrice(quantity*item.price))
+
     }
   return (
     <div className='w-full flex flex-row gap-3 border-solid border-b  py-4 '>
                      <Link to={`/${item._id}`} >
                      <div className=''>
                         <img className='rounded-md'
-                        src={item.productMainImage} width={150}/>
+                        src={item.mainImage} width={150}/>
                       </div>
                      </Link>
                       <div className='w-full  flex flex-col gap-4'>

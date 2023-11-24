@@ -17,6 +17,7 @@ import ViewAddress from "./components/core/profile/ViewAddress";
 import UpdateProfile from "./components/core/profile/UpdateProfile";
 import UpdateImg from "./components/core/profile/UpdateImg";
 import AddAddress from "./components/core/profile/AddAddress";
+import Wishlist from "./components/core/profile/Wishlist";
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
       <Route path={"my-profile/update-profile"} element={<UpdateProfile/>} />
       <Route path={"my-profile/update-profileImg"} element={<UpdateImg/>} />
       <Route path={"my-profile/add-address"} element={<AddAddress/>} />
+      <Route path={"my-profile/wishlist"} element={<Wishlist/>} />
       </Route>
     </Routes>
    </div>

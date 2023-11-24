@@ -66,8 +66,7 @@ const Navbar = () => {
       id: 3,
       name: "Wishlist",
       icon: <AiOutlineHeart />,
-      link: "/wishlist",
-
+      link: "/my-profile/wishlist",
     },
     
   ]
