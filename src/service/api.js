@@ -6,7 +6,9 @@ GET_ALL_CATEGORY_API : BASE_URL + "/product/fetchallCategory",
 GET_CATEGORY_SUBCATEGORY : BASE_URL + "/product/fetchallSubCategory",
 GET_SUBCATEGORI_WISE_PRODUCT : BASE_URL + "/product/getSubCategoryWiseProduct",
 GET_SINGLE_PRODUDCT_DETAILS : BASE_URL + "/product/getSingleProductDetails",
-CREATE_PRODUCT_URL:BASE_URL + "/product/createProduct"
+CREATE_PRODUCT_URL:BASE_URL + "/product/createProduct",
+GET_USER_PRODUCT : BASE_URL + "/product/getUserProduct",
+DELETE_PROUDUCT : BASE_URL + "/product/deleteProduct"
 }
 
 export const authEndPoints = {
@@ -20,5 +22,6 @@ export const profileEndPoints = {
     UPDATE_PROFILE : BASE_URL + "/user/updateProfile",
     UPDATE_PROFILE_IMG : BASE_URL + "/user/updateProfileImg",
     ADD_ADDRESS : BASE_URL + "/user/addAddress",
-    DELETE_ADDRESS : BASE_URL + "/user/deleteAddres"
+    DELETE_ADDRESS : BASE_URL + "/user/deleteAddres",
+    
 }

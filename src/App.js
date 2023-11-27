@@ -18,6 +18,8 @@ import UpdateProfile from "./components/core/profile/UpdateProfile";
 import UpdateImg from "./components/core/profile/UpdateImg";
 import AddAddress from "./components/core/profile/AddAddress";
 import Wishlist from "./components/core/profile/Wishlist";
+import RegisterAsSeller from "./pages/RegisterAsSeller";
+import SellerProducts from "./pages/SellerProducts";
 
 function App() {
   return (
@@ -34,7 +36,8 @@ function App() {
       <Route path={"/cart"} element={<Cart/>}/>
       <Route path={"/verify-email"} element={<VeryfyEmail/>} />
       <Route path={"/create-product"} element={<AddProduct/>} />
-
+      <Route path={"/registerAsSeller"} element={<RegisterAsSeller/>} />
+      <Route path={"/products"} element={<SellerProducts/>} />
 
       <Route  element={<Profile/>} > 
       <Route path={"my-profile/view-profile"} element={<ProfileInfo/>} />

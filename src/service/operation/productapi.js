@@ -8,7 +8,9 @@ GET_ALL_CATEGORY_API,
 GET_CATEGORY_SUBCATEGORY,
 GET_SUBCATEGORI_WISE_PRODUCT,
 GET_SINGLE_PRODUDCT_DETAILS,
-CREATE_PRODUCT_URL
+CREATE_PRODUCT_URL,
+GET_USER_PRODUCT,
+DELETE_PROUDUCT
 } = productEndPoints
 
 export  const getAllProducts = async () => {
@@ -122,6 +124,56 @@ export  const creteProduct = async (productData) => {
   catch(error) {
     console.log("New product  API ERROR....", error);
     toast.error("product not created")
+  }
+  toast.dismiss(loadId)
+  return resutl
+  
+}
+
+// createing product 
+export  const fetchUserProduct = async (userId) => {
+   
+  let resutl 
+  const loadId = toast.loading("loading...")
+  try{
+    
+    const response = await apiConnector("POST",
+    GET_USER_PRODUCT,
+    {userId:userId},
+    );
+
+    console.log("User products response ",response)
+    resutl = response.data.products
+  }
+  catch(error) {
+    console.log("user  product  API ERROR....", error);
+    toast.error("product not fetched")
+  }
+  toast.dismiss(loadId)
+  return resutl
+  
+}
+
+// deleting product
+export  const deleteingProduct = async (data,fetchingUserProduct) => {
+   
+  let resutl 
+  const loadId = toast.loading("loading...")
+  try{
+    
+    const response = await apiConnector("POST",
+    DELETE_PROUDUCT,
+    data,
+    );
+
+    console.log(" products deletion response ",response)
+    resutl = response.data
+    toast.success("Deleted Successfully")
+    fetchingUserProduct()
+  }
+  catch(error) {
+    console.log("Deletion product  API ERROR....", error);
+    toast.error("product not Deleted")
   }
   toast.dismiss(loadId)
   return resutl

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import logo from "../../../assets/logo.svg"
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {MdDelete} from "react-icons/md"
 import { removeToWishlist } from '../../../slice/produc';
 
@@ -30,10 +30,12 @@ const Wishlist = () => {
       return <div className='w-full p-4 border border-black flex  gap-5 '>
       
      <div className='w-full p-2  flex flex-row gap-5 '>
+     <Link to={`/${product._id}`}>
      <div className='w-[150px] h-[150px]'>
      <img className='w-full h-full rounded-md border border-solid'
      src={product.mainImage}/>
      </div>
+     </Link>
      <div>
       <p className='text-2xl font-semibold'>{product.productName}</p>
       <p className=' font-semibold'>Price : {product.price}</p>

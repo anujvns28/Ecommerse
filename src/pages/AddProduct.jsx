@@ -84,7 +84,7 @@ const AddProduct = () => {
   let subCat = SubcategoriesId ? SubcategoriesId[0]._id : null
   const { user } = useSelector((state) => state.auth)
   const [mainImg,setMainImg] = useState()
-  const [mainImgUrl,setMainImgUrl] = useState()
+  const [mainImgUrl,setMainImgUrl] = useState();
  
   const fatchCategory = async () => {
     const category = await getAllCategories()

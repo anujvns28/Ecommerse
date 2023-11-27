@@ -10,13 +10,16 @@ const {
 } = authEndPoints
 
 
-export const getOtp = async (email) => {
+export const getOtp = async (email,navigate) => {
     try {
         const response = await apiConnector("POST", GET_OTP,{email:email});
         console.log("otp response", response);
+        toast.success("Otp Sent successfully")
+        navigate("/verify-email");
     }
     catch (error) {
         console.log("OTP RESPONSE  API ERROR....", error);
+        toast.error("User Alredy Registerd")
     }
 
 }

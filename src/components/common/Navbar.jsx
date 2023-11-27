@@ -197,11 +197,11 @@ const Navbar = () => {
         }
       </div>
       <div className='flex justify-between w-[24%] items-center'>
-        <div className='flex hover:border border-solid px-1'>
+        <div className='flex hover:border border-solid px-1 '>
           <p className='text-2xl font-bold'><LiaUser /></p>
           {
             <p className='hover:text-neutral-500 '>
-              <Link to={"/login"}> Become Seller
+              <Link to={"/registerAsSeller"}> Become Seller
               </Link>
             </p>
           }

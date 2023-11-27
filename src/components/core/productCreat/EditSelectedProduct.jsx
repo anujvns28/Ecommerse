@@ -1,11 +1,9 @@
-import { isNull } from 'lodash'
 import React, { useEffect, useState } from 'react'
 
-const SelectImg = (props) => {
-
+const EditSelectedProduct = (props) => {
     const [prImg, setPrImg] = useState()
     const [prUrl, setPrUrl] = useState()
-
+   
     const handleChange = (e) => {
         const file = e.target.files[0]
         setPrImg(file)
@@ -14,23 +12,24 @@ const SelectImg = (props) => {
 
         props.onSubmit(e)
     }
-
+     
+    useEffect(() =>{
+    setPrUrl(props.image)
+    },)
    
     const handleClick = () => {
         setPrUrl(null)
         setPrImg(null)
     }
-
-   
-    return (
-        <div className='w-full'>
+  return (
+    <div className='w-full '>
             <p className='text-xl font-semibold '>Select Image {props.imgNum}</p>
-             <div className= 'w-[50%] h-[250px] border border-black rounded-md flex items-center justify-center'>
+             <div className= 'w-full h-[250px] border border-black rounded-md flex items-center justify-center'>
             {
                 prUrl ?
                     <div className=' h-[250px] bg-cover p-3'>
                         <img src={prUrl} 
-                        className='w-full h-auto bg-cover aspect-video ' />
+                        className='w-full h-[230px] bg-cover aspect-video  ' />
                         <button onClick={handleClick}>Delete</button>
                     </div>
                     : <div>
@@ -50,7 +49,7 @@ const SelectImg = (props) => {
             }
         </div>
         </div>
-    )
+  )
 }
 
-export default SelectImg
+export default EditSelectedProduct
