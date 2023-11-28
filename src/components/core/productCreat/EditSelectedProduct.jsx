@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 const EditSelectedProduct = (props) => {
+    
     const [prImg, setPrImg] = useState()
     const [prUrl, setPrUrl] = useState()
    
@@ -15,15 +16,18 @@ const EditSelectedProduct = (props) => {
      
     useEffect(() =>{
     setPrUrl(props.image)
-    },)
+    },[])
    
     const handleClick = () => {
+        console.log("calling by delete")
         setPrUrl(null)
         setPrImg(null)
+        console.log(prUrl,"This is url")
     }
+    
   return (
     <div className='w-full '>
-            <p className='text-xl font-semibold '>Select Image {props.imgNum}</p>
+            <p className='text-xl font-semibold '>Select Image {props.imgNum ? props.imgNum : "mainImage"}</p>
              <div className= 'w-full h-[250px] border border-black rounded-md flex items-center justify-center'>
             {
                 prUrl ?
@@ -42,7 +46,7 @@ const EditSelectedProduct = (props) => {
                                 type="file"
                                 required
                                 onChange={handleChange}
-                                name={`img${props.imgNum}`}
+                                name={props.imgNum ? `img${props.imgNum}` : "mainImage"}
                             />
                         </label>
                     </div>

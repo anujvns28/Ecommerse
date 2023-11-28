@@ -33,7 +33,7 @@ const SellerProductCard = ({product,fetchingUserProduct}) => {
                      </Link>
 
                             {
-                                edit ? <EditProduct productData={product} setEdit={setEdit}/> : ""
+                                edit ? <EditProduct productData={product} setEdit={setEdit} fetchingUserProduct={fetchingUserProduct}/> : ""
                             }
                    
                         <div className='flex justify-between w-[70%]'>

@@ -25,7 +25,7 @@ const SellerProducts = () => {
    
 
   return (
-    <div className='w-[1260px] mx-auto p-5'>
+    <div className='w-[1260px] mx-auto p-5 relative'>
 
         
       {

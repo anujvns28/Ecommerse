@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getAllSubCategories } from '../../../service/operation/productapi'
+import { getAllSubCategories, updatingProduct } from '../../../service/operation/productapi'
 import SelectImg from './SelectImg'
 import EditSelectedProduct from './EditSelectedProduct'
 import { RxCross1 } from "react-icons/rx";
@@ -77,7 +77,7 @@ const gender = [
   }
 ]
 
-const EditProduct = ({ productData,setEdit }) => {
+const EditProduct = ({ productData,setEdit ,fetchingUserProduct}) => {
   const [SubcategoriesId, setSubcategoriesId] = useState()
   const [formData, setFormData] = useState({
     productName: productData.productName,
@@ -97,9 +97,10 @@ const EditProduct = ({ productData,setEdit }) => {
 
 
   const handleChange = (e) => {
+    const { value, name, type, files } = e.target
     setFormData((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value
+      [name] : type ==="file" ? files[0] : value
     }))
   }
 
@@ -117,10 +118,15 @@ const EditProduct = ({ productData,setEdit }) => {
   const getData = (data) => {
     handleChange(data)
   }
+  const data = {
+    ...formData,
+    productId : productData._id
+  }
 
   const handleSubmit = async(e) =>{
     e.preventDefault();
     console.log(formData,"this form data")
+    await updatingProduct(data,fetchingUserProduct,setEdit)
   }
 
 
@@ -237,7 +243,7 @@ const EditProduct = ({ productData,setEdit }) => {
 
         <div >
         <div className='flex flex-wrap flex-row w-[45%]'>
-          <EditSelectedProduct onSubmit={getData} imgNum={"mainImg"} image={formData.mainImage} />
+          <EditSelectedProduct onSubmit={getData}  image={formData.mainImage} />
         </div>
 
          <div className='flex flex-wrap  w-full  justify-between'>

@@ -10,7 +10,8 @@ GET_SUBCATEGORI_WISE_PRODUCT,
 GET_SINGLE_PRODUDCT_DETAILS,
 CREATE_PRODUCT_URL,
 GET_USER_PRODUCT,
-DELETE_PROUDUCT
+DELETE_PROUDUCT,
+EDIT_PRODUCT
 } = productEndPoints
 
 export  const getAllProducts = async () => {
@@ -174,6 +175,37 @@ export  const deleteingProduct = async (data,fetchingUserProduct) => {
   catch(error) {
     console.log("Deletion product  API ERROR....", error);
     toast.error("product not Deleted")
+  }
+  toast.dismiss(loadId)
+  return resutl
+  
+}
+
+
+// createing product 
+export  const updatingProduct = async (data,fetchingUserProduct,setEdit) => {
+   
+  let resutl 
+  const loadId = toast.loading("loading...")
+  try{
+    
+    const response = await apiConnector("POST",
+    EDIT_PRODUCT,
+    data,
+    {
+      "Content-Type": "multipart/form-data",
+    }
+    );
+
+    console.log("updating  products response ",response)
+    resutl = response.data.products
+    toast.success("Product Updated Successfully")
+    setEdit(null)
+    fetchingUserProduct()
+  }
+  catch(error) {
+    console.log("updaing  product  API ERROR....", error);
+    toast.error("product not updated")
   }
   toast.dismiss(loadId)
   return resutl

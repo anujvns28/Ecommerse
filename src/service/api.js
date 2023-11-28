@@ -8,7 +8,8 @@ GET_SUBCATEGORI_WISE_PRODUCT : BASE_URL + "/product/getSubCategoryWiseProduct",
 GET_SINGLE_PRODUDCT_DETAILS : BASE_URL + "/product/getSingleProductDetails",
 CREATE_PRODUCT_URL:BASE_URL + "/product/createProduct",
 GET_USER_PRODUCT : BASE_URL + "/product/getUserProduct",
-DELETE_PROUDUCT : BASE_URL + "/product/deleteProduct"
+DELETE_PROUDUCT : BASE_URL + "/product/deleteProduct",
+EDIT_PRODUCT : BASE_URL + "/product/editProduct"
 }
 
 export const authEndPoints = {
