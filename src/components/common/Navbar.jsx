@@ -3,7 +3,7 @@ import logo from "../../assets/logo.svg"
 import { AiOutlineShoppingCart } from "react-icons/ai"
 import { Link, useNavigate } from 'react-router-dom'
 import { AiOutlineDown } from "react-icons/ai"
-import { getAllCategories, getAllSubCategories } from '../../service/operation/productapi'
+import { getAllCategories, getAllSubCategories, searchProducts } from '../../service/operation/productapi'
 import { HiArrowLongRight } from "react-icons/hi2"
 import { BiLogOut } from "react-icons/bi"
 import { AiOutlineUser } from "react-icons/ai"
@@ -13,6 +13,8 @@ import { useSelector } from 'react-redux'
 import { LiaUser } from 'react-icons/lia'
 import { MdAdd } from "react-icons/md"
 import { RxDashboard } from "react-icons/rx"
+import { CiSearch } from "react-icons/ci";
+
 
 const Navbar = () => {
   const [category, setCategory] = useState(null);
@@ -23,30 +25,19 @@ const Navbar = () => {
   const nevagite = useNavigate()
   const [open, setOpen] = useState(false)
   const openRef = useRef(false)
-
+  const [serch,setSearch] = useState([])
+  const [searchProduct,setSearchProduct] = useState()
 
 
   const navLinks = [
-    {
-      id: 1,
-      name: "Home",
-      link: "/"
-    },
-    {
-      id: 2,
-      name: "About",
-      link: "/about"
-    },
+    
     {
       id: 3,
       name: "Categories",
       link: ""
     },
-    {
-      id: 4,
-      name: "Contect",
-      link: "/contect"
-    },
+
+
   ]
 
   const buyerLinks = [
@@ -133,19 +124,55 @@ const Navbar = () => {
   }
   )
 
+  const handleChange = async(e) =>{
+   
+    setSearch(e.target.value)
+    const products = await searchProducts(serch)
+    setSearchProduct(products.data)
+    if(serch.length == 1){
+      setSearchProduct(null)
+      console.log(searchProduct,"search output")
+    }
+    }
+  
+    
+
   return (
 
     <div className='flex items-center justify-between  h-20 w-full   '>
-      <div className='flex items-center justify-between w-[35%]'>
-        <Link to={"/"}>
+      <div className='flex items-center justify-between w-[60%]'>
+       <div className='flex flex-row gap-6 items-center justify-center'>
+       <Link to={"/"}>
           <img width={60} src={logo} />
         </Link >
+  
+        <h1 className='text-2xl font-semibold'>shouseDekho.com</h1>
+       </div>
 
         <input
-          placeholder='Type Prduct or Brand Name'
-          className='w-[400px] py-1 rounded-full bg-slate-100 flex items-center justify-centere border border-solid px-5 outline-none'
+          placeholder="Enter Product Name"
+          value={serch}
+          onChange={handleChange}
+          className='w-[500px] py-1 relative  rounded-full bg-slate-300 flex  items-center justify-centere border border-solid px-5 outline-none'
         />
-
+        {
+          serch.length ? 
+          <div>
+            {
+          searchProduct && <div className='left-[380px] py-4 z-50 rounded-md top-[60px] w-[500px] p-3 bg-white text-black absolute border border-black'>
+            {
+              searchProduct.map((item) =>{
+                return <div className='hover:bg-slate-400'>
+                  <p className='text-xm font-bold px-2 py-[1px] '>{item.productName}</p>
+                </div>
+              })
+            }
+          </div>
+        }
+          </div> 
+          : <div></div>
+        }
+      
       </div>
       <div className='flex flex-row gap-8'>
         {

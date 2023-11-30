@@ -11,7 +11,8 @@ GET_SINGLE_PRODUDCT_DETAILS,
 CREATE_PRODUCT_URL,
 GET_USER_PRODUCT,
 DELETE_PROUDUCT,
-EDIT_PRODUCT
+EDIT_PRODUCT,
+SEARC_PRODUCT
 } = productEndPoints
 
 export  const getAllProducts = async () => {
@@ -210,4 +211,22 @@ export  const updatingProduct = async (data,fetchingUserProduct,setEdit) => {
   toast.dismiss(loadId)
   return resutl
   
+}
+
+
+// searching product
+
+export  const searchProducts = async (data) => {
+  let resutl 
+  try{
+        const response = await apiConnector("POST",SEARC_PRODUCT,{proName:data});
+
+      console.log("response hai bahiya ji",response)
+      resutl = response.data
+  }
+  catch(error) {
+    console.log("All Prduct fetching  API ERROR....", error);
+  }
+ 
+  return resutl
 }
