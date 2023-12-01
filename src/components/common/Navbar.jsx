@@ -27,6 +27,7 @@ const Navbar = () => {
   const openRef = useRef(false)
   const [serch,setSearch] = useState([])
   const [searchProduct,setSearchProduct] = useState()
+  const navigate = useNavigate();
 
 
   const navLinks = [
@@ -135,6 +136,12 @@ const Navbar = () => {
     }
     }
   
+
+    const handleClick = (productId) =>{
+     nevagite(`/${productId}`)
+     setSearchProduct(null)
+     setSearch([])
+    }
     
 
   return (
@@ -150,10 +157,10 @@ const Navbar = () => {
        </div>
 
         <input
-          placeholder="Enter Product Name"
+          placeholder="Search Product By Name"
           value={serch}
           onChange={handleChange}
-          className='w-[500px] py-1 relative  rounded-full bg-slate-300 flex  items-center justify-centere border border-solid px-5 outline-none'
+          className='w-[500px] py-1 relative  rounded-md bg-slate-300 flex  items-center justify-centere border border-solid px-5 outline-none'
         />
         {
           serch.length ? 
@@ -162,7 +169,8 @@ const Navbar = () => {
           searchProduct && <div className='left-[380px] py-4 z-50 rounded-md top-[60px] w-[500px] p-3 bg-white text-black absolute border border-black'>
             {
               searchProduct.map((item) =>{
-                return <div className='hover:bg-slate-400'>
+                return <div onClick={() => handleClick(item._id)}
+                className='hover:bg-slate-400'>
                   <p className='text-xm font-bold px-2 py-[1px] '>{item.productName}</p>
                 </div>
               })
@@ -224,7 +232,7 @@ const Navbar = () => {
         }
       </div>
       <div className='flex justify-between w-[24%] items-center'>
-        <div className='flex hover:border border-solid px-1 '>
+        <div className='flex  px-1 '>
           <p className='text-2xl font-bold'><LiaUser /></p>
           {
             <p className='hover:text-neutral-500 '>
