@@ -37,7 +37,7 @@ export const signupUser = async (data) => {
 
 }
 
-export const loginUser = async (data,dispatch) => {
+export const loginUser = async (data,dispatch,nevagite) => {
     
     try {
         const response = await apiConnector("POST", LOGIN_API,data);
@@ -48,6 +48,7 @@ export const loginUser = async (data,dispatch) => {
          localStorage.setItem("user",JSON.stringify(response.data.user));
          dispatch(setToken(response.data.token));
          dispatch(setUser(response.data.user));
+         nevagite("/")
     }
     catch (error) {
         console.log("Login RESPONSE  API ERROR....", error);
