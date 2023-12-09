@@ -36,8 +36,7 @@ const Login = () => {
       
     }
 
-console.log("this is token",token)
-console.log("this is token",user)
+
     return (
         <div className='w-[1000px] mx-auto  flex m-5'>
 

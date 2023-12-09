@@ -25,6 +25,8 @@ const Navbar = () => {
   const nevagite = useNavigate()
   const [open, setOpen] = useState(false)
   const openRef = useRef(false)
+  const searchRef = useRef(false)
+ 
   const [serch,setSearch] = useState([])
   const [searchProduct,setSearchProduct] = useState()
   const navigate = useNavigate();
@@ -116,11 +118,23 @@ const Navbar = () => {
   }
 
   window.addEventListener("click", (e) => {
-    if (!openRef.current) {
+    if (!openRef.current ) {
       return
     }
-    if (!openRef.current.contains(e.target)) {
+    if (!openRef.current.contains(e.target) ) {
       setOpen(false)
+      
+    }
+  }
+  )
+  window.addEventListener("click", (e) => {
+    if ( !searchRef.current ) {
+      return
+    }
+    if (!searchRef.current.contains(e.target) ) {
+      setOpen(false)
+      setSearchProduct(null)
+      setSearch([])
     }
   }
   )
@@ -164,13 +178,13 @@ const Navbar = () => {
         />
         {
           serch.length ? 
-          <div>
+          <div ref={searchRef}>
             {
           searchProduct && <div className='left-[380px] py-4 z-50 rounded-md top-[60px] w-[500px] p-3 bg-white text-black absolute border border-black'>
             {
               searchProduct.map((item) =>{
                 return <div onClick={() => handleClick(item._id)}
-                className='hover:bg-slate-400'>
+                className='hover:bg-slate-400 cursor-pointer'>
                   <p className='text-xm font-bold px-2 py-[1px] '>{item.productName}</p>
                 </div>
               })
@@ -284,9 +298,10 @@ const Navbar = () => {
                         ? <div className='p-3 rounded-md bg-slate-500 absolute z-50 w-[150px]'>
                           {
                             buyerLinks.map((links) => {
-                              return <Link to={links.link}>
+                              return <Link to={links.link} >
                                 <div className='flex flex-row gap-2 p-2 items-center justify-start hover:bg-slate-400 rounded-md'
-                                  key={links.id}>
+                                  key={links.id}
+                                  >
                                   <p>{links.name}</p>
                                   <p>{links.icon}</p>
                                 </div>
