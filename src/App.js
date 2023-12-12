@@ -20,6 +20,8 @@ import AddAddress from "./components/core/profile/AddAddress";
 import Wishlist from "./components/core/profile/Wishlist";
 import RegisterAsSeller from "./pages/RegisterAsSeller";
 import SellerProducts from "./pages/SellerProducts";
+import ForgotPassword from "./pages/ForgotPassword";
+import ForgotPasswordSendMail from "./pages/ForgotPasswordSendMail";
 
 function App() {
   return (
@@ -38,6 +40,8 @@ function App() {
       <Route path={"/create-product"} element={<AddProduct/>} />
       <Route path={"/registerAsSeller"} element={<RegisterAsSeller/>} />
       <Route path={"/products"} element={<SellerProducts/>} />
+      <Route path={"/forgot-password/:userId"} element={<ForgotPassword/>} />
+      <Route path={"/forgot-password"} element={<ForgotPasswordSendMail/>} />
 
       <Route  element={<Profile/>} > 
       <Route path={"my-profile/view-profile"} element={<ProfileInfo/>} />

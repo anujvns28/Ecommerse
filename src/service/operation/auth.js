@@ -2,11 +2,14 @@ import { toast } from "react-toastify";
 import { authEndPoints } from "../api";
 import { apiConnector } from "../apiconnectur";
 import { setToken, setUser } from "../../slice/auth";
+import { BsDatabaseDash } from "react-icons/bs";
 
 const {
     GET_OTP,
     SIGN_UP_API,
-    LOGIN_API
+    LOGIN_API,
+    FORGOTPASSWORDTOKEN_API,
+    FORGOTPASSWORD_API
 } = authEndPoints
 
 
@@ -53,6 +56,44 @@ export const loginUser = async (data,dispatch,nevagite) => {
     catch (error) {
         console.log("Login RESPONSE  API ERROR....", error);
         toast.error("Login Faild")
+    }
+
+}
+
+export const forgotPasswordToken = async (email) => {
+    const loadingId = toast.loading("loding....")
+    try {
+        const response = await apiConnector("POST",FORGOTPASSWORDTOKEN_API,{email:email});
+        console.log("forgot password token response", response);
+
+        toast.success("Reset link send your mail")
+        toast.dismiss(loadingId)
+    }
+    catch (error) {
+        console.log("for got password token   API ERROR....", error);
+        toast.error("Error in Reset token")
+        toast.dismiss(loadingId)
+    }
+
+}
+
+
+export const forgotPassword = async (data,nevagite) => {
+    const loadingId = toast.loading("loding....")
+    try {
+      
+        const response = await apiConnector("POST", FORGOTPASSWORD_API,data);
+        
+        console.log("forgot password response", response);
+       
+        toast.success("Reset Password successfull")
+        nevagite("/login")
+        toast.dismiss(loadingId)
+    }
+    catch (error) {
+        console.log("for got password  API ERROR....", error);
+        toast.error("Error in Reset password")
+        toast.dismiss(loadingId)
     }
 
 }

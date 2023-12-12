@@ -16,7 +16,9 @@ SEARC_PRODUCT : BASE_URL + "/product/searchProducts"
 export const authEndPoints = {
     GET_OTP : BASE_URL + "/user/sendOtp",
     SIGN_UP_API : BASE_URL + "/user/signup",
-    LOGIN_API : BASE_URL + "/user/login"
+    LOGIN_API : BASE_URL + "/user/login",
+    FORGOTPASSWORDTOKEN_API : BASE_URL + "/user/forgotPasswordToken",
+    FORGOTPASSWORD_API : BASE_URL + "/user/forgotPassword"
 }
 
 export const profileEndPoints = {

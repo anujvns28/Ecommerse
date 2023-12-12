@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { loginUser } from '../service/operation/auth';
+import { forgotPasswordToken, loginUser } from '../service/operation/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import loginImg1 from "../.././src/assets/login_img1.png"
 import loginImg2 from "../assets/login_img2.png"
@@ -71,7 +71,7 @@ const Login = () => {
                     />
                 </label>
                  
-                 <p className='ml-64 text-sm text-blue-800 font-semibold'>Forgot Password</p>
+                 <p onClick={() => nevagite("/forgot-password")} className='ml-64 text-sm text-blue-800 cursor-pointer font-semibold'>Forgot Password</p>
 
                 <button className='text-xl px-3 py-2  w-[130px] rounded-md bg-yellow-400'>Log in</button>
             </form>
