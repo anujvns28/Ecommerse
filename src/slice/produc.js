@@ -8,8 +8,10 @@ const initialState = {
     : [],
     wishlist:localStorage.getItem("wishlist") 
     ? JSON.parse(localStorage.getItem("wishlist"))
-    : []
-    
+    : [],
+    recentlyView : localStorage.getItem("recentlyView")
+    ? JSON.parse(localStorage.getItem("recentlyView"))
+    : [],
 }
 export const counterSlice = createSlice({
     name: 'product',
@@ -51,11 +53,32 @@ export const counterSlice = createSlice({
             const index = state.wishlist.findIndex((item) => item._id === product._id);
             state.wishlist.splice(index,1);
             localStorage.setItem("wishlist",JSON.stringify(state.wishlist))
+        },
+        addToRecentlyView(state,value){
+            const product = value.payload;
+            const index = state.recentlyView.findIndex((item) => item._id === product._id);
+            if(index === -1 ){
+               if(state.recentlyView.length <= 5){
+                state.recentlyView.splice(0,0,product);
+               localStorage.setItem("recentlyView",JSON.stringify(state.recentlyView))
+               }else{
+                state.recentlyView.pop();
+                state.recentlyView.splice(0,0,product);
+                localStorage.setItem("recentlyView",JSON.stringify(state.recentlyView))
+               }
+            }
         }
     },
 })
 
 // Action creators are generated for each case reducer function
-export const {setFilterProduct,addToCart,removeCart,addToWishlist,removeToWishlist} = counterSlice.actions
+export const {
+    setFilterProduct,
+    addToCart,
+    removeCart,
+    addToWishlist,
+    removeToWishlist,
+    addToRecentlyView
+} = counterSlice.actions
 
 export default counterSlice.reducer

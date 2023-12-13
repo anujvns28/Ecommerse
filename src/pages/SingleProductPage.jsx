@@ -10,7 +10,7 @@ import 'swiper/css/autoplay';
 import SlidCard from '../components/core/SlidCard';
 import Card from '../components/common/Card';
 import { useDispatch } from 'react-redux';
-import { addToCart, addToWishlist, } from '../slice/produc';
+import { addToCart, addToRecentlyView, addToWishlist, } from '../slice/produc';
 import { toast } from 'react-toastify';
 
 const SingleProductPage = () => {
@@ -35,7 +35,7 @@ const SingleProductPage = () => {
             }
         }
        
-       
+       dispatch(addToRecentlyView(result.productDetails));
     }
 
     useEffect(() => {

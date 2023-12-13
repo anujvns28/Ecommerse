@@ -4,6 +4,7 @@ import { getOtp } from '../service/operation/auth'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { setsignupData } from '../slice/auth'
+import logo from "../assets/logo.svg"
 
 const Signup = () => {
     const navigate = useNavigate()
@@ -52,7 +53,11 @@ const Signup = () => {
       </div>
 
       <div className='w-[40%] border border-black p-3 px-3 flex  rounded-md flex-col gap-2'>
-      <h1 className='text-3xl text-center mt-7 font-semibold'>Cushioning Best Shouses for Your Miles With ShouseDekho</h1>
+      <div className='flex items-center justify-center mt-2'>
+                 <img className='flex items-center justify-center'
+                 width={150} src={logo}/>
+                 </div>
+      <h1 className='text-3xl text-center mt-3 font-semibold'>Cushioning Best Shouses for Your Miles With ShouseDekho</h1>
       <p className='text-blue-400 text-center text-xl italic font-semibold'>Your Pricacy is Our Responsibility</p>
 
       <form onSubmit={ handleSubmit}

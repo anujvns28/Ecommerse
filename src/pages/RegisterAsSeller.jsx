@@ -4,6 +4,7 @@ import { getOtp } from '../service/operation/auth'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { setsignupData } from '../slice/auth'
+import logo from "../assets/logo.svg"
 
 const RegisterAsSeller = () => {
     const navigate = useNavigate()
@@ -44,21 +45,23 @@ const RegisterAsSeller = () => {
 
    
   return (
-    <div className='flex  w-[80%] mx-auto'>
-      <div className=' w-[50%]  border border-solid'>
-      <img className=''
-       src={img} />
-      </div>
+    <div className='flex  w-[90%] mx-auto  '>
+     
 
-      <div className='w-[50%] border border-solid px-3'>
-      <h1 className='text-3xl font-semibold'>Cushioning Best Shouses for Your Miles With ShouseDekho</h1>
-      <p className='text-blue-400 text-xl italic font-semibold'>Your Pricacy is Our Responsibility</p>
+      <div className='w-[40%] border border-black p-3 px-3 flex  rounded-md flex-col gap-2'>
+      <p className='text-blue-400 text-center text-xl italic font-semibold'>Seller Account</p>
+      <div className='flex items-center justify-center'>
+                 <img className='flex items-center justify-center'
+                 width={200} src={logo}/>
+                 </div>
+      <h1 className='text-3xl text-center mt-4 font-semibold'>Sell Online with shouseDekho.com</h1>
+      <p className='text-blue-400 text-center text-xl italic font-semibold'>Your Pricacy is Our Responsibility</p>
 
       <form onSubmit={ handleSubmit}
       className='mt-6'>
-        <div className='flex'>
-        <label>
-        <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5"
+        <div className='flex w-full gap-3 flex-row'>
+        <label className='w-full'>
+        <p className='text-xl font-semibold'
         >First Name<sup className='text-pink-200'>*</sup></p>
             <input
             required
@@ -66,11 +69,12 @@ const RegisterAsSeller = () => {
             onChange={handleChange}
             name="firstName"
             type='text'
-            />
+            className='w-full border border-black outline-none p-2 rounded-md text-xl '
+                    />
         </label>
 
-        <label>
-        <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5"
+        <label className='w-full'>
+        <p className='text-xl font-semibold'
         >Last Name<sup className='text-pink-200'>*</sup></p>
             <input
             required
@@ -78,12 +82,15 @@ const RegisterAsSeller = () => {
             onChange={handleChange}
             name="lastName"
             type='text'
+            className='w-full border border-black outline-none p-2 rounded-md text-xl '
             />
+           
+                    
         </label>
         </div>
 
-        <label>
-        <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5"
+        <label className='w-full'>
+        <p className='text-xl font-semibold'
         >Email<sup className='text-pink-200'>*</sup></p>
             <input
             required
@@ -91,12 +98,13 @@ const RegisterAsSeller = () => {
             onChange={handleChange}
             name="email"
             type='email'
+            className='w-full border border-black outline-none p-2 rounded-md text-xl '
             />
         </label>
 
-        <div className='flex'>
-        <label>
-        <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5"
+        <div className='flex w-full gap-3'>
+        <label className='w-full'>
+        <p className='text-xl font-semibold'
         >Create Password<sup className='text-pink-200'>*</sup></p>
             <input
             required
@@ -104,11 +112,12 @@ const RegisterAsSeller = () => {
             onChange={handleChange}
             name="password"
             type='text'
+            className='w-full border border-black outline-none p-2 rounded-md text-xl '
             />
         </label>
 
-        <label>
-        <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5"
+        <label className='w-full'>
+        <p className='text-xl font-semibold'
         >Confirm Password<sup className='text-pink-200'>*</sup></p>
             <input
             required
@@ -116,12 +125,18 @@ const RegisterAsSeller = () => {
             onChange={handleChange}
             name="confirmPassword"
             type='text'
+            className='w-full border border-black outline-none p-2 rounded-md text-xl '
             />
         </label>
         </div>
 
-        <button className='w-full bg-yellow-500 text-black py-2 mt-3'>Create Account</button>
+        <button className='w-full bg-yellow-500 rounded-md text-black py-2 mt-3'>Create Seller Account</button>
       </form>
+      </div>
+
+      <div className=' w-[60%] h-[600px] '>
+      <img 
+       src={img} height={300} />
       </div>
     </div>
   )

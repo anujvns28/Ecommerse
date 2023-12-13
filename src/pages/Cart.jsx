@@ -20,7 +20,7 @@ const Cart = () => {
   },[cart])
   console.log(cart, "this is cart prduct")
   return (
-    <div className=' flex flex-col items-center justify-center gap-4 border border-solid w-[80%] mx-auto'>
+    <div className='mb-10 flex flex-col items-center justify-center gap-4 border border-solid w-[80%] mx-auto'>
       {
         cart.length !== 0
           ? <div className='w-full '>

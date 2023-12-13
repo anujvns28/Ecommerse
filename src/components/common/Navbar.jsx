@@ -9,11 +9,12 @@ import { BiLogOut } from "react-icons/bi"
 import { AiOutlineUser } from "react-icons/ai"
 import { VscGift } from "react-icons/vsc"
 import { AiOutlineHeart } from "react-icons/ai"
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { LiaUser } from 'react-icons/lia'
 import { MdAdd } from "react-icons/md"
 import { RxDashboard } from "react-icons/rx"
 import { CiSearch } from "react-icons/ci";
+import { logout } from '../../service/operation/auth'
 
 
 const Navbar = () => {
@@ -30,7 +31,7 @@ const Navbar = () => {
   const [serch,setSearch] = useState([])
   const [searchProduct,setSearchProduct] = useState()
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
 
   const navLinks = [
     
@@ -160,7 +161,7 @@ const Navbar = () => {
 
   return (
 
-    <div className='flex items-center justify-between  h-20 w-full   '>
+    <div className='flex items-center justify-between  h-20 w-11/12 mx-auto   '>
       <div className='flex items-center justify-between w-[60%]'>
        <div className='flex flex-row gap-6 items-center justify-center'>
        <Link to={"/"}>
@@ -203,24 +204,24 @@ const Navbar = () => {
               <div className='flex relative group cursor-pointer items-center flex-row gap-1  justify-center '>
                 <p>Categories</p>
                 <AiOutlineDown />
-                <div className="w-20 absolute  bg-slate-100  invisible left-[50%] top-[50%] z-[1000] flex  translate-x-[-50%] translate-y-[3em] flex-col rounded-lg bg-richblack-5 p-4 text-richblack-900  transition-all duration-150 group-hover:visible group-hover:translate-y-[1.65em]  lg:w-[300px]">
-                  <div className="absolute left-[50%] top-0 -z-10 h-6 w-6 translate-x-[80%] translate-y-[-40%] rotate-45 select-none rounded bg-slate-100"></div>
+                <div className="w-20 absolute  bg-slate-300  invisible left-[50%] top-[50%] z-[1000] flex  translate-x-[-50%] translate-y-[3em] flex-col rounded-lg bg-richblack-5 p-4 text-richblack-900  transition-all duration-150 group-hover:visible group-hover:translate-y-[1.65em]  lg:w-[300px]">
+                  <div className="absolute left-[50%] top-0 -z-10 h-6 w-6 translate-x-[80%] translate-y-[-40%] rotate-45 select-none rounded bg-slate-300"></div>
                   {
                     category ? <div >
                       {
                         category.categoies.map((category, index) => {
                           return <div key={index}
-                            className='hover:bg-slate-200 anuj py-4 px-4 rounded-md relative'>
+                            className='hover:bg-slate-400 anuj py-4 px-4 rounded-md relative'>
                             <div onMouseOver={() => subCategories(category._id)}
                               className='flex justify-between'>
                               {category.categoryName}
                               <p className='text-2xl'>  <HiArrowLongRight /></p>
                             </div>
-                            <div className=" subCategories absolute p-4 rounded-md bg-slate-200  ">
+                            <div className=" subCategories absolute p-4 rounded-md bg-slate-300  ">
                               {
                                 subCategoires ? subCategoires.subCategorys.map((item, index) => {
                                   return <div onClick={() => handleSubCategories(category._id, item._id)}
-                                    className='hover:bg-slate-300  py-4 px-4 rounded-md relative '>
+                                    className='hover:bg-slate-400  py-4 px-4 rounded-md relative '>
                                     {
                                       item.name
                                     }
@@ -248,12 +249,19 @@ const Navbar = () => {
       <div className='flex justify-between w-[24%] items-center'>
         <div className='flex  px-1 '>
           <p className='text-2xl font-bold'><LiaUser /></p>
-          {
+          
             <p className='hover:text-neutral-500 '>
-              <Link to={"/registerAsSeller"}> Become Seller
+             {
+              user ? user.accountType === "Seller" ? "Seller Account" : 
+               <Link to={"/registerAsSeller"}> 
+                Become Seller 
+                </Link>
+              :  <Link to={"/registerAsSeller"}> 
+              Become Seller 
               </Link>
+             }
+            
             </p>
-          }
 
         </div>
 
@@ -266,8 +274,10 @@ const Navbar = () => {
                 </div>
                   : ""
               }
-              <Link to={"/cart"}> <AiOutlineShoppingCart />
-              </Link>
+            {
+               user.accountType === "Seller" ? "" 
+               :  <Link to={"/cart"}> <AiOutlineShoppingCart /></Link>
+            }
             </p>
           }
           {
@@ -295,11 +305,11 @@ const Navbar = () => {
                   <div className='relative w-full'>
                     {
                       user.accountType === "Buyer" || user.accountType === "Admin"
-                        ? <div className='p-3 rounded-md bg-slate-500 absolute z-50 w-[150px]'>
+                        ? <div className='p-3 rounded-md bg-slate-400 absolute z-50 w-[150px]'>
                           {
                             buyerLinks.map((links) => {
                               return <Link to={links.link} >
-                                <div className='flex flex-row gap-2 p-2 items-center justify-start hover:bg-slate-400 rounded-md'
+                                <div className='flex flex-row gap-2 p-2 items-center justify-start hover:bg-slate-500 rounded-md'
                                   key={links.id}
                                   >
                                   <p>{links.name}</p>
@@ -308,7 +318,7 @@ const Navbar = () => {
                               </Link>
                             })
                           }
-                          <div onClick={() => localStorage.clear()}
+                          <div onClick={() => logout(dispatch,navigate)}
                           className='flex flex-row gap-2 p-2 items-center justify-start hover:bg-slate-400 rounded-md'>
                             <p>Logout</p>
                             <p><BiLogOut /></p>
@@ -316,7 +326,7 @@ const Navbar = () => {
                         </div>
                         : <div>
                           {
-                             <div className='p-3 rounded-md bg-slate-500 absolute z-50 w-[170px]'>
+                             <div className='p-3 rounded-md bg-slate-300 absolute z-50 w-[170px]'>
                             {
                               sellerLikns.map((links) => {
                                 return <Link to={links.link}>
@@ -328,7 +338,7 @@ const Navbar = () => {
                                 </Link>
                               })
                             }
-                            <div onClick={() => localStorage.clear()}
+                            <div onClick={() => logout(dispatch,navigate)}
                             className='flex flex-row gap-2 p-2 items-center justify-start hover:bg-slate-400 rounded-md'>
                               <p>Logout</p>
                               <p><BiLogOut /></p>

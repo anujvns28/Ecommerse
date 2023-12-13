@@ -26,7 +26,7 @@ import ForgotPasswordSendMail from "./pages/ForgotPasswordSendMail";
 function App() {
   return (
    <div className="w-full ">
-    <div className="w-11/12  mx-10" >
+   
      <Navbar/>
     
     <Routes>
@@ -53,7 +53,7 @@ function App() {
       <Route path={"my-profile/wishlist"} element={<Wishlist/>} />
       </Route>
     </Routes>
-   </div>
+  
    <Footer/>
    </div>
   );

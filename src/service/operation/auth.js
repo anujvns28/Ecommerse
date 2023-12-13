@@ -4,6 +4,7 @@ import { apiConnector } from "../apiconnectur";
 import { setToken, setUser } from "../../slice/auth";
 import { BsDatabaseDash } from "react-icons/bs";
 
+
 const {
     GET_OTP,
     SIGN_UP_API,
@@ -98,3 +99,13 @@ export const forgotPassword = async (data,nevagite) => {
 
 }
 
+// log out
+
+export const logout = (dispatch,navigate) =>{
+    dispatch(setToken(null))
+    dispatch(setUser(null))
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    toast.success("Loghout Successfully")
+    navigate("/")
+}
