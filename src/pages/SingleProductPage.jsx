@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { getAllSubCategories, getAllSubCategoryProduct, getSingleProductDetails } from '../service/operation/productapi';
 import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -9,20 +9,28 @@ import 'swiper/css/pagination';
 import 'swiper/css/autoplay';
 import SlidCard from '../components/core/SlidCard';
 import Card from '../components/common/Card';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, addToRecentlyView, addToWishlist, } from '../slice/produc';
 import { toast } from 'react-toastify';
+import Modal from '../components/common/Modal';
+import { buyShouse } from '../service/operation/payment';
 
 const SingleProductPage = () => {
-    const { prouctId } = useParams();
+    const { productId } = useParams();
     const [productDetail, setProductDetails] = useState();
     const [showImage, setShowImage] = useState();
     const [showReleatedProduct,setShowReleatedProduct] = useState();
     const [releatedSubCategories,setSubCategories] = useState();
     const dispatch = useDispatch()
+    const {user} = useSelector((state) => state.auth)
+    const [modalData,setModalData] = useState()
+    const nevagite = useNavigate();
+    
+
+   
 
     const fetchProductDetails = async () => {
-        const result = await getSingleProductDetails(prouctId);
+        const result = await getSingleProductDetails(productId);
         if (result) {
             setProductDetails(result.productDetails)
             const releatedProduct = await getAllSubCategoryProduct(result.productDetails.subCategory);
@@ -40,23 +48,54 @@ const SingleProductPage = () => {
 
     useEffect(() => {
         fetchProductDetails()
-    }, [prouctId])
+    }, [productId])
 
     const handleCart = (productDetail) =>{
-      dispatch(addToCart(productDetail))
+      if(user === null){
+      setModalData({
+        text1:"Your Are Not Logged in!",
+        text2:"Please Login to add To Cart",
+        btn1:"Login",
+        btn2:"Cancel",
+        path:"/login",
+        handler2:() => setModalData(null),
+        handler1:() => nevagite("/login")
+      })
+      }else{
+        dispatch(addToCart(productDetail))
+      }
+     
     }
 
    const  handleWishList = (productData) =>{
-    dispatch(addToWishlist(productData))
+    if(user === null){
+      setModalData({
+        text1:"Your Are Not Logged in!",
+        text2:"Please Login to add To Wishlist",
+        btn1:"Login",
+        btn2:"Cancel",
+        path:"/login",
+        handler1:() => nevagite("/login"),
+        handler2:() => setModalData(null),
+      })
+      }else{
+        dispatch(addToWishlist(productData))
+      }
+    
+   }
+
+   const handlePayment = () =>{
+    //uyCourse([courseId],user,navigate,dispatch);
+    buyShouse([productId],user,nevagite,dispatch)
    }
 
 
      console.log("pringting single product details ", releatedSubCategories)
     return (
-        <div className=' '>
+        <div className='  '>
             <div className=' w-[77%] mx-auto flex my-10 flex-row gap-[8%]'>
-                <div className='flex flex-row gap-2 w-[48%]'>
-                    <div className=''>
+                <div className='flex flex-row gap-2 w-[48%] '>
+                    <div className='relative'>
                         {
                             productDetail ?
                                 <div
@@ -97,12 +136,19 @@ const SingleProductPage = () => {
                     <div className='flex flex-col gap-3'>
                      <div className='flex flex-row gap-3'>
                      <button onClick={() => handleCart(productDetail)}
-                     className='rounded-full text-xl px-2 py-4 w-[48%] bg-black  text-white'>Add to Cart</button>
+                     className='rounded-full text-xl px-2 py-4 w-[48%] bg-black  text-white'>
+                      Add to Cart
+                    </button>
                       <button onClick={() => handleWishList(productDetail)}
-                      className='rounded-full text-xl px-2 py-4 w-[48%]  border border-black text-black'>Wishlist</button>
+                      className='rounded-full text-xl px-2 py-4 w-[48%]  border border-black text-black'>
+                        Wishlist
+                    </button>
                      </div>
 
-                      <button className='rounded-full text-xl px-2 py-4 bg-yellow-500 w-full text-white'>Buy Now</button>
+                      <button onClick={handlePayment}
+                      className='rounded-full text-xl px-2 py-4 bg-yellow-500 w-full text-white'>
+                        Buy Now
+                      </button>
                     </div>
                 </div>
             </div>
@@ -122,7 +168,7 @@ const SingleProductPage = () => {
                 <div className='items-center  '>
                 {
                    showReleatedProduct.product.map((ele) =>{
-                   if(ele._id !== prouctId){
+                   if(ele._id !== productId){
                     return <div className='flex items-center justify-center '>
                        <SwiperSlide>
                         <Card cardData={ele}/>
@@ -170,6 +216,11 @@ const SingleProductPage = () => {
           : <div>Loading...</div>
         }
       </div>
+
+      {/* modal */}
+      {
+        modalData ? <Modal modalData={modalData} /> : ""
+      }
 
         </div>
     )

@@ -29,3 +29,10 @@ export const profileEndPoints = {
     DELETE_ADDRESS : BASE_URL + "/user/deleteAddres",
     
 }
+
+
+export const paymentEndpoints = {
+    SHOUSE_PAYMENT_API: BASE_URL + "/payment/capturePayment",
+    SHOUSE_VERIFY_API: BASE_URL + "/payment/verifyPayment",
+    SEND_PAYMENT_SUCCESS_EMAIL_API: BASE_URL + "/payment/sendPaymentSuccessEmail",
+  }

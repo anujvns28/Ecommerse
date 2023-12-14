@@ -88,6 +88,7 @@ export  const getAllSubCategoryProduct = async (subCategoryId) => {
 //get Single Product DEtails
 
 export  const getSingleProductDetails = async (productId) => {
+  console.log(productId,"this is product id")
    
   let resutl 
   try{
