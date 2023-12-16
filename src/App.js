@@ -22,6 +22,8 @@ import RegisterAsSeller from "./pages/RegisterAsSeller";
 import SellerProducts from "./pages/SellerProducts";
 import ForgotPassword from "./pages/ForgotPassword";
 import ForgotPasswordSendMail from "./pages/ForgotPasswordSendMail";
+import Orders from "./pages/Orders";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   return (
@@ -42,6 +44,8 @@ function App() {
       <Route path={"/products"} element={<SellerProducts/>} />
       <Route path={"/forgot-password/:userId"} element={<ForgotPassword/>} />
       <Route path={"/forgot-password"} element={<ForgotPasswordSendMail/>} />
+      <Route path={"/orders"} element={<Orders/>} />
+      <Route path={"/dashboard"} element={<Dashboard/>} />
 
       <Route  element={<Profile/>} > 
       <Route path={"my-profile/view-profile"} element={<ProfileInfo/>} />

@@ -4,6 +4,7 @@ import { apiConnector } from "../apiconnectur";
 import rzpLogo from "../../assets/Logo-Full-Dark.png"
 
 
+
 const {SEND_PAYMENT_SUCCESS_EMAIL_API,SHOUSE_PAYMENT_API,SHOUSE_VERIFY_API} = paymentEndpoints
 
 function loadScript(src) {
@@ -22,9 +23,8 @@ function loadScript(src) {
 }
 
 
-export async function buyShouse(shouses, userDetails, navigate, dispatch) {
-
-    console.log(userDetails,"thisi siiii")
+export async function buyShouse(shouses, userDetails,addressId ) {
+    const userId = userDetails._id
     const toastId = toast.loading("Loading...");
     try{
         //load the script
@@ -42,9 +42,10 @@ export async function buyShouse(shouses, userDetails, navigate, dispatch) {
             throw new Error(orderResponse.data.message);
         }
         console.log("PRINTING orderResponse", orderResponse);
+
         //options
         const options = {
-            key: process.env.RAZORPAY_KEY,
+            key: process.env.REACT_APP_RAZORPAY_KEY,
             currency: orderResponse.data.message.currency,
             amount: `${orderResponse.data.message.amount}`,
             order_id:orderResponse.data.message.id,
@@ -56,12 +57,11 @@ export async function buyShouse(shouses, userDetails, navigate, dispatch) {
                 email:userDetails.email
             },
             handler: function(response) {
-                //send successful wala mail
-               // sendPaymentSuccessEmail(response, orderResponse.data.message.amount,token );
-                //verifyPayment
-                 verifyPayment({...response, shouses}, navigate, dispatch);
+               
+                 verifyPayment({...response, shouses,userId,addressId});
             }
         }
+        console.log(options,"this is printing options")
         
         const paymentObject = new window.Razorpay(options);
 
@@ -95,10 +95,10 @@ async function sendPaymentSuccessEmail(response, amount, token) {
 }
 
 
-async function verifyPayment(bodyData, navigate, dispatch) {
+async function verifyPayment(bodyData) {
 
     console.log(bodyData,"this is body data")
-    const toastId = toast.loading("Verifying Payment....");
+    const toastId = toast.loading("Veryfing Payment...")
     try{
         const response  = await apiConnector("POST", SHOUSE_VERIFY_API, bodyData)
 

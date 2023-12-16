@@ -10,7 +10,8 @@ CREATE_PRODUCT_URL:BASE_URL + "/product/createProduct",
 GET_USER_PRODUCT : BASE_URL + "/product/getUserProduct",
 DELETE_PROUDUCT : BASE_URL + "/product/deleteProduct",
 EDIT_PRODUCT : BASE_URL + "/product/editProduct",
-SEARC_PRODUCT : BASE_URL + "/product/searchProducts"
+SEARC_PRODUCT : BASE_URL + "/product/searchProducts",
+CUSTOMR_ORDERS : BASE_URL + "/product/order"
 }
 
 export const authEndPoints = {

@@ -31,10 +31,11 @@ const EditSelectedProduct = (props) => {
              <div className= 'w-full h-[250px] border border-black rounded-md flex items-center justify-center'>
             {
                 prUrl ?
-                    <div className=' h-[250px] bg-cover p-3'>
+                    <div className=' h-[250px] bg-cover relative p-3'>
                         <img src={prUrl} 
                         className='w-full h-[230px] bg-cover aspect-video  ' />
-                        <button onClick={handleClick}>Delete</button>
+                        <button onClick={handleClick}
+                        className='bg-yellow-400 px-2 py-1 rounded-md absolute bottom-2'>Delete</button>
                     </div>
                     : <div>
                         <label >     

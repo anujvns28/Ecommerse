@@ -16,9 +16,8 @@ import { Link } from 'react-router-dom';
 
 const Home = () => {
   const [category, setCategory] = useState(null);
-  const [allCategories, setallCategories] = useState([]);
-  const all_categories = []
   const { recentlyView } = useSelector((state) => state.product)
+  const {user} = useSelector((state) => state.auth)
 
   console.log(recentlyView, "this is recently view jikkkkkkk")
 
@@ -101,7 +100,7 @@ const Home = () => {
     }
 
     {
-      recentlyView.length > 0
+     user && recentlyView.length > 0
         ? <div>
           <h1 className='text-xl font-semibold italic py-1'>Recently View</h1>
           <Swiper

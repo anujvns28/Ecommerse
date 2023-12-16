@@ -131,11 +131,12 @@ const EditProduct = ({ productData,setEdit ,fetchingUserProduct}) => {
 
 
   return (
-    <div className='w-full absolute bg-slate-200  '>
+    <div className='fixed inset-0 z-[1000] !mt-0 grid place-items-center overflow-auto bg-white bg-opacity-10 backdrop-blur-sm'>
+      <div className='w-[65%] my-16 bg-slate-200  '>
       <p onClick={() => setEdit(null)}
-      className='text-2xl font-bold absolute right-6 top-6 cursor-pointer'><RxCross1/></p>
+      className='text-2xl font-bold flex items-end justify-end   p-3 cursor-pointer'><RxCross1/></p>
       <form onSubmit={handleSubmit}
-      className='w-[80%] border border-black rounded-md mx-auto  my-14'>
+      className='w-[80%] border border-black rounded-md mx-auto p-4  my-7'>
         <label>
           <p className='text-xl font-semibold pb-1'>Product Name</p>
           <input
@@ -261,6 +262,7 @@ const EditProduct = ({ productData,setEdit ,fetchingUserProduct}) => {
 
         <button className='px-3 py-2 rounded-md bg-yellow-500 items-start w-[150px] text-xl'>submit</button>
       </form>
+    </div>
     </div>
   )
 }

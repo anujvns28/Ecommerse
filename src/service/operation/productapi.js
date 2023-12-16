@@ -12,7 +12,8 @@ CREATE_PRODUCT_URL,
 GET_USER_PRODUCT,
 DELETE_PROUDUCT,
 EDIT_PRODUCT,
-SEARC_PRODUCT
+SEARC_PRODUCT,
+CUSTOMR_ORDERS
 } = productEndPoints
 
 export  const getAllProducts = async () => {
@@ -229,5 +230,21 @@ export  const searchProducts = async (data) => {
     console.log("All Prduct fetching  API ERROR....", error);
   }
  
+  return resutl
+}
+
+export  const fetchOrders = async (data) => {
+  let resutl 
+  const loadId = toast.loading("loading...")
+  try{
+        const response = await apiConnector("POST",CUSTOMR_ORDERS,{userId:data});
+
+      console.log("order Response",response)
+      resutl = response.data
+  }
+  catch(error) {
+    console.log("Orders fetching  API ERROR....", error);
+  }
+  toast.dismiss(loadId)
   return resutl
 }

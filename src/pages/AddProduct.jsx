@@ -166,7 +166,7 @@ const getData = (data) =>{
 
   
   return (
-    <div className='w-full py-24 '>
+    <div className='w-full pt-7 pb-20 '>
       {
         !isCategorie &&
         <div className='w-full gap-3  h-full flex  items-center justify-center '>
@@ -190,7 +190,13 @@ const getData = (data) =>{
       {/* after selecting categore */}
       {
         isCategorie &&
-        <form className='w-[60%] mx-auto border border-solid p-4 flex flex-col gap-3 rounded-md' 
+        <div className='w-[80%] bg-slate-300 mx-auto py-8'>
+          <div className='flex w-full justify-end p-4'>
+          <button className='px-5 text-end py-2 bg-yellow-500 rounded-md text-xl  '
+          onClick={() => setIsCategore(null)}>Back
+          </button>
+          </div>
+          <form className='w-[90%]  mx-auto border border-solid p-4 flex flex-col gap-3 rounded-md' 
         onSubmit={handleSubmit}>
           <label>
             <p className='text-xl font-semibold pb-1'>Product Name</p>
@@ -334,6 +340,7 @@ const getData = (data) =>{
 
           <button className='px-3 py-2 rounded-md bg-yellow-500 items-start w-[150px] text-xl'>submit</button>
         </form>
+        </div>
       }
 
       
