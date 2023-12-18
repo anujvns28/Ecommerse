@@ -12,6 +12,7 @@ const initialState = {
     recentlyView : localStorage.getItem("recentlyView")
     ? JSON.parse(localStorage.getItem("recentlyView"))
     : [],
+    cartTotalPrice : 0
 }
 export const counterSlice = createSlice({
     name: 'product',
@@ -67,8 +68,13 @@ export const counterSlice = createSlice({
                 localStorage.setItem("recentlyView",JSON.stringify(state.recentlyView))
                }
             }
+        },
+        addPrice(state,value){
+            const price = value.payload;
+            state.cartTotalPrice = state.cartTotalPrice + price
         }
     },
+        
 })
 
 // Action creators are generated for each case reducer function
@@ -78,7 +84,8 @@ export const {
     removeCart,
     addToWishlist,
     removeToWishlist,
-    addToRecentlyView
+    addToRecentlyView,
+    addPrice
 } = counterSlice.actions
 
 export default counterSlice.reducer

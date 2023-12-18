@@ -106,9 +106,7 @@ export const logout = (dispatch,navigate) =>{
     dispatch(setUser(null))
     localStorage.removeItem("user");
     localStorage.removeItem("token");
-    localStorage.removeItem("wishlist");
-    localStorage.removeItem("recentlyView");
-    localStorage.removeItem("cart");
+    
     toast.success("Loghout Successfully")
     navigate("/")
 }

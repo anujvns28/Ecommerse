@@ -1,17 +1,32 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {RiDeleteBin6Line} from "react-icons/ri"
 import { useDispatch } from 'react-redux';
-import { removeCart } from '../../slice/produc';
+import { addPrice, removeCart } from '../../slice/produc';
 
-const CartCard = ({item}) => {
+
+const CartCard = ({item,}) => {
     const [quantity,setQuantity] = useState(1);
     const dispatch = useDispatch()
 
     const handleChange = (event) =>{
         setQuantity(event.target.value)
-
+        if(event.target.value === 1){
+          console.log(quantity,'quantiti ')
+          dispatch(addPrice(event.target.value  * item.price))   ; 
+        }else{
+          console.log(quantity,'quantiti ')
+          dispatch(addPrice((event.target.value - 1 ) * item.price))   ; 
+        }     
     }
+
+   const setPrice = () =>{
+    dispatch(addPrice(item.price));
+   }
+   
+   useEffect(() =>{
+    setPrice()
+   },[])
   return (
     <div className='w-full flex flex-row gap-3 border-solid border-b  py-4 '>
                      <Link to={`/${item._id}`} >

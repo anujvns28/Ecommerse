@@ -48,6 +48,8 @@ const SubCategorieWisePage = () => {
     fetchProducts()
   }, [subCategoryId])
 
+  console.log(products,"printing productsssss...")
+
 
   window.addEventListener("click", (e) => {
     if (!openRef.current) {
@@ -93,13 +95,13 @@ const SubCategorieWisePage = () => {
 
   return (
     <div className='flex flex-col gap-3 px-2 mx-auto'>
-      <div className='w-full flex items-center justify-between z-10 text-black py-2 sticky top-0 z-50  mt-8 bg-white '>
+      <div className='w-full flex items-center justify-between  text-black py-2 sticky top-0 z-50  mt-8 bg-white '>
         {
           products ?
 
             <div >
 
-              <p className='text-xs'>Sports Shouse / {products.name}</p>
+              <p className='text-xs'>{products.categoriId.categoryName} / {products.name}</p>
               <h1 className='text-xl font-semibold'>{products.name} ({product ? product.length : products.product.length})</h1>
             </div>
             : <div className='flex items-center justify-center h-screen'>Loading...</div>
@@ -144,16 +146,16 @@ const SubCategorieWisePage = () => {
 
                 products ?
                   loading ?
-                    <div className='flex items-center w-full justify-center text-xl font-semibold'>loading..</div>
-                    : <div>
-                      <div>
+                    <div className='flex items-center w-full justify-center text-xl font-semibold'>Loading..</div>
+                    : <div className='w-full'>
+                      <div className='w-full'>
                         {
                           products.product.length !== 0
-                            ? <div className={`flex flex-wrap  flex-row gap-2  ${showFilter ? "w-full" : ""} `}>
+                            ? <div className={`flex flex-wrap w-full  flex-row gap-4  ${showFilter ? "w-full" : ""} `}>
                               {
                                 product
                                   ? product.map((item, index) => {
-                                    return <div className='w-[32.5%] rounded-md'
+                                    return <div className='w-[31.5%] rounded-md '
                                       key={index}>
                                       {
                                         <Card cardData={item} showFilter={showFilter} />
@@ -161,7 +163,7 @@ const SubCategorieWisePage = () => {
                                     </div>
                                   })
                                   : products.product.map((item, index) => {
-                                    return <div className={`w-[32.5%] rounded-md `}
+                                    return <div className={`w-[31.5%] rounded-md`}
                                       key={index}>
                                       {
                                         <Card cardData={item} showFilter={showFilter} />
@@ -170,11 +172,11 @@ const SubCategorieWisePage = () => {
                                   })
 
                               }
-                            </div> : <div className='flex items-center justify-center h-screen'>Not Found</div>
+                            </div> : <div className='flex items-center justify-center  w-full text-xl font-semibold h-screen'>Not Found</div>
                         }
                       </div>
                     </div>
-                  : <div className='flex items-center justify-center h-screen custom-loader'></div>
+                  : <div className='flex items-center justify-center h-screen custom-loader'>Not Found</div>
 
               }
             </div>
@@ -182,7 +184,7 @@ const SubCategorieWisePage = () => {
         }
       </div>
 
-      <div >
+      <div className='my-3 mb-8'>
         <h1 className='text-2xl font-semibold py-3 '>Similar Shouses Brands</h1>
         {
           categorie ?

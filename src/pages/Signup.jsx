@@ -46,7 +46,7 @@ const Signup = () => {
 
    
   return (
-    <div className='flex  w-[90%] mx-auto  '>
+    <div className='flex  w-[90%] mx-auto m-5 '>
       <div className=' w-[60%] h-[600px] '>
       <img 
        src={img} height={300} />

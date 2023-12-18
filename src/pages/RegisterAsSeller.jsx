@@ -45,10 +45,10 @@ const RegisterAsSeller = () => {
 
    
   return (
-    <div className='flex  w-[90%] mx-auto  '>
+    <div className='flex  w-[90%] mx-auto my-3 mb-5  '>
      
 
-      <div className='w-[40%] border border-black p-3 px-3 flex  rounded-md flex-col gap-2'>
+      <div className='w-[40%] border my-3 border-black p-3 px-3 flex  rounded-md flex-col gap-2'>
       <p className='text-blue-400 text-center text-xl italic font-semibold'>Seller Account</p>
       <div className='flex items-center justify-center'>
                  <img className='flex items-center justify-center'

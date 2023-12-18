@@ -180,7 +180,7 @@ const SingleProductPage = () => {
       </div>
       {/* relaeatd products */}
       <div>
-        <h1 className='text-2xl font-semibold py-3 text-black'>Similar Shouses </h1>
+        <h1 className='text-2xl font-semibold py-3  text-black'>Similar Shouses </h1>
         {
           showReleatedProduct ?
             <div>
@@ -195,7 +195,7 @@ const SingleProductPage = () => {
                     {
                       showReleatedProduct.product.map((ele) => {
                         if (ele._id !== productId) {
-                          return <div className='flex items-center justify-center '>
+                          return <div className='flex  items-center justify-center '>
                             <SwiperSlide>
                               <Card cardData={ele} />
                             </SwiperSlide>
@@ -211,7 +211,7 @@ const SingleProductPage = () => {
         }
       </div>
       {/* similar categories */}
-      <div className='border border-t my-10'>
+      <div className=' border-t my-10'>
         <h1 className='text-2xl font-semibold py-3 '>Similar Shouses Brands</h1>
         {
           releatedSubCategories ?
