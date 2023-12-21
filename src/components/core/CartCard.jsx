@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {RiDeleteBin6Line} from "react-icons/ri"
 import { useDispatch } from 'react-redux';
-import { addPrice, removeCart } from '../../slice/produc';
+import { addPrice, removeCart, removePrice } from '../../slice/produc';
 
 
 const CartCard = ({item,}) => {
@@ -11,17 +11,27 @@ const CartCard = ({item,}) => {
 
     const handleChange = (event) =>{
         setQuantity(event.target.value)
-        if(event.target.value === 1){
-          console.log(quantity,'quantiti ')
-          dispatch(addPrice(event.target.value  * item.price))   ; 
-        }else{
-          console.log(quantity,'quantiti ')
-          dispatch(addPrice((event.target.value - 1 ) * item.price))   ; 
-        }     
+        const data = {
+          productId : item._id,
+          quantity : Number(event.target.value),
+          price : item.price
+        }
+        dispatch(addPrice(data))
+      
     }
 
    const setPrice = () =>{
-    dispatch(addPrice(item.price));
+    const data = {
+      productId : item._id,
+      quantity : 1,
+      price : item.price
+    }
+    dispatch(addPrice(data))
+   }
+
+   const handleDelet = (productId) =>{
+    dispatch(removeCart(item))
+    dispatch(removePrice(productId))
    }
    
    useEffect(() =>{
@@ -65,7 +75,7 @@ const CartCard = ({item,}) => {
                             </label>
                           </div>
                           <div>
-                            <p onClick={ () => dispatch(removeCart(item))}
+                            <p onClick={ () => handleDelet(item._id)}
                             className='cursor-pointer'><RiDeleteBin6Line/></p>
                           </div>
                         </div>

@@ -12,7 +12,7 @@ const initialState = {
     recentlyView : localStorage.getItem("recentlyView")
     ? JSON.parse(localStorage.getItem("recentlyView"))
     : [],
-    cartTotalPrice : 0
+    cartTotalPrice : []
 }
 export const counterSlice = createSlice({
     name: 'product',
@@ -70,10 +70,22 @@ export const counterSlice = createSlice({
             }
         },
         addPrice(state,value){
-            const price = value.payload;
-            state.cartTotalPrice = state.cartTotalPrice + price
+            let pro = value.payload;
+            const index = state.cartTotalPrice.findIndex((item) =>(item.productId ===pro.productId))
+            console.log(index,"pringitn index ji")
+            if(index >= 0){
+                state.cartTotalPrice.splice(index,1,pro)
+            }else{
+                state.cartTotalPrice.push(pro)
+            }
+        },
+        removePrice(state,value){
+            let proId = value.payload;
+            const index = state.cartTotalPrice.findIndex((item) =>(item.productId === proId))
+            state.cartTotalPrice.splice(index,1);
         }
-    },
+
+    }
         
 })
 
@@ -85,7 +97,8 @@ export const {
     addToWishlist,
     removeToWishlist,
     addToRecentlyView,
-    addPrice
+    addPrice,
+    removePrice
 } = counterSlice.actions
 
 export default counterSlice.reducer

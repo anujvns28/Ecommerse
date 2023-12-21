@@ -1,17 +1,44 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import cartImg from "../assets/empty-cart.jpg"
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import CartCard from '../components/core/CartCard'
+import {RxCross1} from "react-icons/rx"
+import { FetchUserData } from '../service/operation/profil'
+import { buyShouse } from '../service/operation/payment'
 
 const Cart = () => {
-
+ let totalprice = 0
   const { cart } = useSelector((state) => state.product) 
-  const {cartTotalPrice} = useSelector((state) => state.product);
+  const {user} = useSelector((state) => state.auth)
+   const {cartTotalPrice} = useSelector((state) => state.product);
+   const [address, setaddress] = useState()
+   const nevagite = useNavigate()
+   
+  const handleAddress = async() =>{
+    const userData = await FetchUserData(user._id)
+    if (userData) {
+      setaddress(userData.data.address)
+    }
+  }
 
+
+
+  const handlePayment = async(addressId) =>{
+  const result = await buyShouse(cart,user,addressId);
+    localStorage.removeItem("cart")
+    setaddress(null)
+    
+  
+  }
+
+
+  cartTotalPrice.map((item) => totalprice = totalprice + item.price * item.quantity)
+
+  console.log(totalprice,"this is totalprice")
   
   return (
-    <div className='mb-10 flex flex-col items-center justify-center gap-4 border border-solid w-[80%] mx-auto'>
+    <div className='mb-10 flex flex-col items-center justify-center gap-4  w-[80%] mx-auto'>
       {
         cart.length !== 0
           ? <div className='w-full '>
@@ -32,12 +59,13 @@ const Cart = () => {
               <div className='bg-slate-400 rounded-md p-3'>
                 <div className='flex items-center justify-between border-b border-solid p-3 text-2xl'>
                   <h2>SUBTOTAL</h2>
-                  <h2>{cartTotalPrice}</h2>
+                  <h2>{totalprice}</h2> 
                 </div>
                 <p className='p-3'>The subtotal reflects the total price of your order, including duties and taxes, before any applicable discounts. It does not include delivery costs and international transaction fees.</p>
                 
               </div>
-              <div className='px-6 text-center py-4 text-xl mt-5 bg-black rounded-full text-white hover:bg-opacity-80'
+              <div onClick={handleAddress}
+              className='px-6 text-center cursor-pointer py-4 text-xl mt-5 bg-black rounded-full text-white hover:bg-opacity-80'
               >Checkout</div>
               </div>
             </div>
@@ -52,6 +80,42 @@ const Cart = () => {
               <div className='px-6 py-4 text-xl mt-5 bg-black rounded-full text-white hover:bg-opacity-80'
               >Continue Shopping</div>
             </Link>
+          </div>
+      }
+
+{
+        address ? <div className='fixed inset-0 z-[1000] !mt-0 grid place-items-center overflow-auto bg-white bg-opacity-10 backdrop-blur-sm'>
+          <div className='absolute bg-slate-400 flex flex-col gap-5 p-4 w-[50%] py-11'>
+            <div className='flex justify-between '>
+              <p className='text-2xl font-semibold '>Selec Address </p>
+              < p onClick={() => setaddress(null)}
+                className='text-2xl font-semibold cursor-pointer '><RxCross1 /></p>
+            </div>
+            {
+              address.map((address) => {
+                return <div onClick={() => handlePayment(address._id)}
+                  className='w-full p-4 border border-black flex cursor-pointer  gap-5 '>
+
+                  <div className='w-full p-4  flex flex-col gap-5 '>
+                    <div className='flex text-xl font-semibold flex-row gap-4'>
+                      <p>{address.name}</p>
+                      <p>{address.phoneNumber}</p>
+                    </div>
+                    <p> {address.address}, {address.locality}, {address.city}, {address.state}, -{address.pincode} </p>
+                  </div>
+
+
+                </div>
+              })
+            }
+            <button onClick={() => nevagite("/my-profile/add-address")}
+              className='p-3 bg-yellow-400 rounded-md'>Create New Address
+            </button>
+
+          </div>
+        </div>
+          : <div>
+
           </div>
       }
     </div>

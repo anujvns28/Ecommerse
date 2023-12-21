@@ -30,7 +30,7 @@ const Dashboard = () => {
 
     return (
         <div className='w-11/12 mx-auto mb-4 '>
-            <div className='w-[80%] border border-black mx-auto h-screen p-3'>
+            <div className='w-[80%] border border-black mx-auto  p-3'>
                 <div className='flex flex-row gap-3 '>
                     <div className=' h-[150px] bg-slate-400 p-4 rounded-md flex flex-col gap-2 '>
                         <p className='text-2xl font-semibold'>Hello ! {user.firstName}</p>
