@@ -26,7 +26,8 @@ const SubCategorieWisePage = () => {
   const { product } = useSelector((state) => state.product)
   const [showFilter, setShowFilters] = useState(true)
   const [open, setOpen] = useState(false)
-  const openRef = useRef(false)
+  const openRef = useRef('');
+  const filterRef = useRef("");
   const [sortLtoH, setSortLtoH] = useState(false)
   const [sortHtoL, setSortHtoL] = useState(false)
   const [loading, setLoading] = useState(true);
@@ -48,17 +49,16 @@ const SubCategorieWisePage = () => {
     fetchProducts()
   }, [subCategoryId])
 
-  console.log(products,"printing productsssss...")
-
+  
 
   window.addEventListener("click", (e) => {
-    if (!openRef.current) {
+    if (filterRef.current === e.target) {
       return
     }
-    if (!openRef.current.contains(e.target)) {
+    if (openRef.current !== e.target) {
       setOpen(false)
     }
-  }
+   }
   )
 
   // sorting low to high
@@ -80,10 +80,7 @@ const SubCategorieWisePage = () => {
     dispatch(setFilterProduct(sortedProduct))
     setSortLtoH(false);
     setSortHtoL(true);
-    setOpen(false)
-
-    
-    
+    setOpen(false)  
   }
   
 
@@ -95,7 +92,7 @@ const SubCategorieWisePage = () => {
 
   return (
     <div className='flex flex-col gap-3 px-2 mx-auto'>
-      <div className='w-full flex items-center justify-between  text-black py-2 sticky top-0 z-50  mt-8 bg-white '>
+      <div className='w-full flex items-center justify-between  text-black py-2 sticky top-0 z-40  px-5 mt-8 bg-white '>
         {
           products ?
 
@@ -106,7 +103,7 @@ const SubCategorieWisePage = () => {
             </div>
             : <div className='flex items-center justify-center h-screen'>Loading...</div>
         }
-        <div className='flex flex-row gap-4 text-lg'>
+        <div className='flex flex-row gap-4 text-lg '>
           <div onClick={() => setShowFilters(!showFilter)}
             className='flex items-center flex-row gap-1 cursor-pointer'>
             <p >
@@ -115,12 +112,13 @@ const SubCategorieWisePage = () => {
             <IoFilterSharp />
           </div>
           <div onClick={() => setOpen(true)}
-            ref={openRef}
-            className='flex items-center flex-row gap-1 cursor-pointer relative'>
-            <p>Sort By</p>
+            
+            className='flex items-center flex-row gap-1 cursor-pointer relative '>
+            <p ref={filterRef}>Sort By</p>
             {
               open ?
-                <div className='bg-slate-400 p-3 rounded-md flex flex-col  items-start absolute w-[170px] translate-y-16 -translate-x-14'>
+                <div ref={openRef}
+                className='bg-slate-400 p-3 rounded-md flex flex-col  items-start absolute w-[170px] translate-y-16 -translate-x-14'>
                   <p onClick={() => sortingHichToLow()}
                     className={`p-1 w-full rounded-md hover:bg-slate-300 text-sm ${sortHtoL ? "text-blue-700" : ""}`}>Price: High-Low</p>
                   <p onClick={() => sortinglowToHigh()}

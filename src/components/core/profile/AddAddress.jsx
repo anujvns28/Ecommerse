@@ -138,7 +138,7 @@ const AddAddress = () => {
             />
           </label>
 
-          <button>submit</button>
+          <button className='px-3 py-2 bg-yellow-400 rounded-md mt-2'>submit</button>
           
       </form>
     </div>

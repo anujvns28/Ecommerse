@@ -53,8 +53,6 @@ const Orders = () => {
      <p className=' font-semibold'>Desc : {product.productDes}</p>
     </div>  
     </div>
-
-    
      </div>
     })
   }

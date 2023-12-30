@@ -24,9 +24,10 @@ const Navbar = () => {
   const { user } = useSelector((state) => state.auth);
   const { cart } = useSelector((state) => state.product);
   const nevagite = useNavigate()
-  const [open, setOpen] = useState(false)
-  const openRef = useRef(false)
-  const searchRef = useRef(false)
+  const [openOtherLiks, setOpenOtherLiks] = useState(false)
+  const openRef = useRef('');
+  const profileRef = useRef("");
+  const searchRef = useRef(false);
  
   const [serch,setSearch] = useState([])
   const [searchProduct,setSearchProduct] = useState()
@@ -119,13 +120,14 @@ const Navbar = () => {
   }
 
   window.addEventListener("click", (e) => {
-    if (!openRef.current ) {
+    if (profileRef.current == e.target ) {
       return
     }
-    if (!openRef.current.contains(e.target) ) {
-      setOpen(false)
+    if (openRef.current !== e.target) {
+      setOpenOtherLiks(false)
       
     }
+    //console.log(profileRef.current , e.target,"printing ref")
   }
   )
   window.addEventListener("click", (e) => {
@@ -133,7 +135,7 @@ const Navbar = () => {
       return
     }
     if (!searchRef.current.contains(e.target) ) {
-      setOpen(false)
+      setOpenOtherLiks(false)
       setSearchProduct(null)
       setSearch([])
     }
@@ -294,15 +296,17 @@ const Navbar = () => {
           }
           {
             token &&
-            <div onClick={() => setOpen(true)}
-              ref={openRef}
+            <div onClick={() => setOpenOtherLiks(true)}
+              
               className=' cursor-pointer'>
               <img
+               ref={profileRef}
                 className=' w-[30px] h-[30px] object-contain rounded-full '
                 src={user.image} />
               {
-                open ?
-                  <div className='relative w-full'>
+                openOtherLiks ?
+                  <div ref={openRef}
+                  className='relative w-full z-50'>
                     {
                       user.accountType === "Buyer" || user.accountType === "Admin"
                         ? <div className='p-3 rounded-md bg-slate-400 absolute z-50 w-[150px]'>

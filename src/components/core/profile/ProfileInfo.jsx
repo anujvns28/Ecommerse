@@ -4,6 +4,7 @@ import { useNavigate, useOutletContext } from "react-router-dom"
 const ProfileInfo = () => {
 
     const [userData] = useOutletContext()
+    console.log(userData,"datakjlj")
     const nevagite = useNavigate();
 
     return (
