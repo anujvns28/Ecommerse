@@ -15,6 +15,7 @@ const {
 
 
 export const getOtp = async (email,navigate) => {
+    const loadingId = toast.loading("loading...")
     try {
         const response = await apiConnector("POST", GET_OTP,{email:email});
         console.log("otp response", response);
@@ -23,12 +24,13 @@ export const getOtp = async (email,navigate) => {
     }
     catch (error) {
         console.log("OTP RESPONSE  API ERROR....", error);
-        toast.error("User Alredy Registerd")
+        toast.error(error.response.data.message)
     }
-
+    toast.dismiss(loadingId);
 }
 
 export const signupUser = async (data) => {
+    const toastId = toast.loading("loading..")
     try {
         const response = await apiConnector("POST", SIGN_UP_API,data);
         console.log("Signup response", response);
@@ -36,13 +38,13 @@ export const signupUser = async (data) => {
     }
     catch (error) {
         console.log("Signup RESPONSE  API ERROR....", error);
-        toast.error("User Rejusteration Faild")
+        toast.error(error.response.data.message);
     }
-
+    toast.dismiss(toastId)
 }
 
 export const loginUser = async (data,dispatch,nevagite) => {
-    
+    const loadingId = toast.loading("loading...")
     try {
         const response = await apiConnector("POST", LOGIN_API,data);
         console.log("login response", response);
@@ -56,9 +58,9 @@ export const loginUser = async (data,dispatch,nevagite) => {
     }
     catch (error) {
         console.log("Login RESPONSE  API ERROR....", error);
-        toast.error("Login Faild")
+        toast.error(error.response.data.message)
     }
-
+    toast.dismiss(loadingId);
 }
 
 export const forgotPasswordToken = async (email) => {

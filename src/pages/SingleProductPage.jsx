@@ -130,7 +130,7 @@ const SingleProductPage = () => {
                     productDetail.productsImages.map((item) => {
                       return <div className='w-20'>
                         <img onClick={() => setShowImage(item)}
-                          className='object-cover rounded-md w-32 h-20'
+                          className='object-cover rounded-md w-32 h-20 cursor-pointer'
                           src={item} ></img >
                       </div>
 

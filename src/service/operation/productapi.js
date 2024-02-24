@@ -33,25 +33,21 @@ export  const getAllProducts = async () => {
 }
 
 export const getAllCategories = async() =>{
-  const toastId = toast.loading("loading...")
+ 
   let result =[]
   try{
-  
    const response = await apiConnector("GET",GET_ALL_CATEGORY_API,)
-   
-
    console.log("CAtegory api response",response)
    result = response.data
   }catch(err){
     console.log("All Category fetching  API ERROR....", err);
   }
-  toast.dismiss(toastId)
   return result 
 }
 
 
 export const getAllSubCategories = async(categoryId) =>{
-  const toastId = toast.loading("loading...")
+
   let result =[]
   try{
   
@@ -62,14 +58,13 @@ export const getAllSubCategories = async(categoryId) =>{
   }catch(err){
     console.log("All Categories SubCategory fetching  API ERROR....", err);
   }
-  toast.dismiss(toastId)
+
   return result
 }
 
 //get categoryWise Subcategories
 
 export  const getAllSubCategoryProduct = async (subCategoryId) => {
-   
   let resutl 
   try{
     
@@ -82,7 +77,6 @@ export  const getAllSubCategoryProduct = async (subCategoryId) => {
     console.log("SubCategori All Prduct fetching  API ERROR....", error);
   }
   return resutl
-  
 }
 
 
@@ -90,7 +84,6 @@ export  const getAllSubCategoryProduct = async (subCategoryId) => {
 
 export  const getSingleProductDetails = async (productId) => {
   console.log(productId,"this is product id")
-   
   let resutl 
   try{
     
